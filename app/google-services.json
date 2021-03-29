@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "132697607370",
+    "project_id": "tariflercarpisiyor",
+    "storage_bucket": "tariflercarpisiyor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132697607370:android:8c31337f15ec15c274b833",
+        "android_client_info": {
+          "package_name": "com.mervebozkurt.tariflercarpisiyor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132697607370-kei0pf8bkge50gfbom2nh7qd551gdo8t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAclHSVtaF51VfHv8ronlcuQJt5bGUN8x0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132697607370-kei0pf8bkge50gfbom2nh7qd551gdo8t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

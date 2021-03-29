@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home_selector"
+        android:title="@string/title_home"/>
+    <item
+        android:id="@+id/navigation_categories"
+        android:icon="@drawable/categories_selector"
+        android:title="@string/title_Categories"/>
+    <item
+        android:id="@+id/navigation_AddRecipe"
+        android:icon="@drawable/ic_action_plus"
+        android:title="@string/title_AddRecipe"/>
+    <item
+        android:id="@+id/navigation_findMeal"
+        android:icon="@drawable/findmeal_selector"
+        android:title="@string/title_FindMeal"/>
+    <item
+        android:id="@+id/navigation_MyProfile"
+        android:icon="@drawable/myprofile_selector"
+        android:title="@string/title_Profile"/>
+
+</menu>

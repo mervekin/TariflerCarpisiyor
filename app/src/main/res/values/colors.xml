@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="white">#F4F3F2</color>
+
+
+    <color name="IndianRed">#CD5C5C</color>
+    <color name="LightCoral">#F08080</color>
+    <color name="Salmon">#FA8072</color>
+    <color name="DarkSalmon">#E9967A</color>
+    <color name="LightSalmon">#FFA07A</color>
+    <color name="mint">#20B2AA</color>
+
+    <color name="GlossyGrape">#B190BA</color>
+    <color name="Tumbleweed">#E8B595</color>
+
+    <color name="colorICon">#FFEC09</color>
+    <color name="Salmon1">#ff8c69</color>
+    <color name="Salmon2">#ee8262</color>
+    <color name="Salmon3">#cd7054</color>
+    <color name="Brown4">#8b2323</color>
+
+
+
+
+</resources>
