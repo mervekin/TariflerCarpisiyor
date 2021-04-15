@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+tools:context=".Profile.UpdateUserProfile">
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:clickable="true"
+        android:background="@drawable/ic_action_account_box_black"
+        android:onClick="ChooseImage"
+        android:id="@+id/imageView_up"/>
+
+<TextView
+    android:id="@+id/textViewProfile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="@string/edit_profile"
+    android:textColor="@color/colorSecondaryDark"
+    android:textSize="40sp"
+    android:textAlignment="center"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:layout_marginBottom="30dp"/>
+<EditText
+    android:id="@+id/et_name_up"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:drawablePadding="7dp"
+    android:drawableLeft="@drawable/ic_action_account_box_black"
+    android:paddingLeft="10dp"
+    android:hint="Name"
+    android:ems="10"
+    android:inputType="textPersonName|textCapSentences"
+    />
+<EditText
+    android:id="@+id/et_surname_up"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:drawablePadding="7dp"
+    android:drawableLeft="@drawable/ic_action_mail_black"
+    android:paddingStart="10dp"
+    android:hint="Surname"
+    android:ems="10"
+    android:inputType="textPersonName|textCapSentences"
+    />
+<EditText
+    android:id="@+id/et_phone_up"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:drawablePadding="7dp"
+    android:drawableLeft="@drawable/ic_action_phone_black"
+    android:paddingStart="10dp"
+    android:hint="Surname"
+    android:ems="10"
+    android:inputType="number"/>
+
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:text="@string/ok"
+    android:id="@+id/btnSaveButton_up"
+    android:layout_marginTop="20dp"
+    android:textSize="20sp"
+    android:textAlignment="center"
+    android:background="@drawable/custom_button"
+    android:textColor="@color/colorPrimaryDark"/>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:indeterminateTint="@color/colorPrimary"
+        android:layout_marginTop="20dp"
+        android:visibility="invisible"
+        android:id="@+id/progressbar_up"/>
+
+</LinearLayout>

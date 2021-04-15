@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Profile.ShowProfile">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:id="@+id/appbar"
+        android:layout_marginBottom="40dp">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+            <ImageView
+                android:id="@+id/show_imageView"
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_action_profile_in"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:foreground="@drawable/rounded"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"
+                android:id="@+id/name_tv_sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Surname"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Surname"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"
+                android:id="@+id/surname_tv_sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:textSize="20sp"
+                android:layout_marginLeft="30dp"
+                android:padding="10dp"
+                android:textAlignment="viewStart"
+                android:id="@+id/phone_tv_sp"/>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMail"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"
+            android:id="@+id/mail_tv_sp"/>
+    </LinearLayout>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorSecondaryDark"
+            android:src="@drawable/ic_action_edit_black"
+            android:layout_gravity="end"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/floatingbtn_sp"/>
+
+
+
+
+
+</LinearLayout>
+
