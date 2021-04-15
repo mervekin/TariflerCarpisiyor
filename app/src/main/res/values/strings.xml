@@ -12,6 +12,7 @@
         <item>Kurabiyeler</item>
         <item>Pastalar ve Kekler</item>
         <item>Salatalar</item>
+        <item>Anne Tarifleri</item>
 
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
@@ -21,5 +22,20 @@
     <string name="title_FindMeal">Dolapta Ne Var?</string>
     <string name="title_Profile">Profilim</string>
     <string name="title_AddRecipe">Tarif Ekle</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="name">Adınız: </string>
+    <string name="e_mail">Mail: </string>
+    <string name="surname">Soyadınız: </string>
+    <string name="phone_number">Telefon numaranız: </string>
+    <string name="dies">###</string>
+    <string name="email_address">Email Address</string>
+    <string name="mail_address">Mail Adress</string>
+    <string name="log_out">Çıkış Yap</string>
+    <string name="edit_profile">Profil</string>
+    <string name="enter_your_name">İsminizi düzenleyiniz</string>
+    <string name="enter_your_surname">Soy isminizi düzenleyiniz</string>
+    <string name="enter_your_phone_number">Telefon numaranızı giriniz</string>
+    <string name="ok">Kaydet</string>
 
 </resources>

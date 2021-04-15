@@ -45,7 +45,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
     Bitmap selectedImage;
     Uri imageData;
     ImageView selectImage;
-    EditText MealName,IngredientsList,CookingStep;
+    EditText MealName,IngredientsList,CookingStep,CookingTime,MealPortion;
     Spinner spinnerCategory;
     String ChoisenCate;
 
@@ -68,6 +68,8 @@ public class UploadRecipeActivity extends AppCompatActivity {
         IngredientsList=findViewById(R.id.editIngredientsList);
         CookingStep=findViewById(R.id.editCookingStep);
         spinnerCategory=findViewById(R.id.spinnerCategory);
+        CookingTime=findViewById(R.id.EditCookingTime);
+        MealPortion=findViewById(R.id.EditMealPortion);
 
         firebaseStorage=FirebaseStorage.getInstance();
         storageReference=firebaseStorage.getReference();
@@ -82,9 +84,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String[] categoryArray=getResources().getStringArray(R.array.RecipesCategories);
                 ChoisenCate = (String)categoryArray[i];
-                System.out.println("choisen"+
-                        ChoisenCate
-                );
             }
 
             @Override
@@ -113,27 +112,35 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             String downloadUrl=uri.toString();
 
                             FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+
                             String userEmail=firebaseUser.getEmail();
                             String userName=firebaseUser.getDisplayName();
+                            String uid=firebaseUser.getUid();
 
 
                             String mealName=MealName.getText().toString();
                             String cookingStep=CookingStep.getText().toString();
                             String ingredientsList=IngredientsList.getText().toString();
+                            String cookingTime=CookingTime.getText().toString();
+                            String mealPortion=MealPortion.getText().toString();
 
                             //hashmsaap oluşturacagız
                             HashMap<String,Object> recipeData=new HashMap<>();
                             recipeData.put("username",userName);
                             recipeData.put("useremail",userEmail);
+                            recipeData.put("useruid",uid);
                             recipeData.put("downloadUrl",downloadUrl);
                             recipeData.put("category",ChoisenCate);
                             recipeData.put("mealname",mealName);
                             recipeData.put("cookingstep",cookingStep);
                             recipeData.put("ingredientslist",ingredientsList);
+                            recipeData.put("mealportion",mealPortion);
+                            recipeData.put("cookingtime",cookingTime);
                             recipeData.put("date", FieldValue.serverTimestamp());
 
                             Toast.makeText(UploadRecipeActivity.this,"Başarılı",Toast.LENGTH_SHORT).show();
                             //save to infromation database
+
                             firebaseFirestore.collection("Recipes").add(recipeData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
@@ -162,7 +169,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(UploadRecipeActivity.this,e.getLocalizedMessage().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(UploadRecipeActivity.this,e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }
             });
         }

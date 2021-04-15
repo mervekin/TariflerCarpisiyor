@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mervebozkurt.tariflercarpisiyor.EachMealRecipeActivity;
+import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +33,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private View.OnClickListener mOnItemClickListener;
   //burdan bir obje oluşturlması gerekirse bunları vermesi gerekn bir bir constracture oluşturmak gerek
 
-    public HomeRecyclerAdapter(ArrayList<String> userNameList, ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealScoreList, ArrayList<String> mealTimeList, ArrayList<String> mealPortionList) {
+    public HomeRecyclerAdapter(ArrayList<String> userNameList, ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealPortionList,ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
         this.userNameList = userNameList;
         this.mealNameList = mealNameList;
         this.mealImageList = mealImageList;
@@ -57,24 +59,31 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
 
 
+            if(mealTimeList!=null) {
+                holder.MealName.setText(mealNameList.get(position));
+                holder.UserName.setText(userNameList.get(position));
+                holder.MealPortion.setText(mealPortionList.get(position));
+                holder.MealTime.setText(mealTimeList.get(position));
 
-            holder.MealName.setText(mealNameList.get(position));
-            holder.UserName.setText(userNameList.get(position));
-
-            Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
+                Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent=new Intent(view.getContext(), EachMealRecipeActivity.class);
                 intent.putExtra("position",mealNameList.get(position));
+
                 System.out.println(mealNameList.get(position));
                 view.getContext().startActivity(intent);
 
             }
         });
-
+            }
+            else{
+               System.out.println("hata var");
+            }
     }
 
     @Override // bizim recyler viewde kaç tane row olduğunu tutacagız.vereceği

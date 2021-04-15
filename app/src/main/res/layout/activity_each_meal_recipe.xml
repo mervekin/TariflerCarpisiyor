@@ -53,6 +53,22 @@
                 android:visibility="visible">
 
             </TextView>
+
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rating_bar"
+                android:isIndicator="false"
+                android:rating="0"
+                android:numStars="5"
+                android:stepSize="0.5"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/DarkSalmon"
+                android:id="@+id/btn_submit"
+                android:text="Puanla"/>
+
         </LinearLayout>
         <TextView
             android:id="@+id/detail_rating"
@@ -108,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:text="Puan"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginStart="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -117,7 +134,8 @@
                 android:layout_weight="1"
                 android:background="#3CF1EBF1"
                 android:gravity="center"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:layout_marginBottom="5dp">
 
                 <ImageView
                     android:layout_width="25dp"
@@ -126,10 +144,10 @@
                     app:tint="@color/DarkSalmon" />
 
                 <TextView
-                    android:id="@+id/detil_portion"
+                    android:id="@+id/detail_portion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginStart="4dp"
                     android:text="Kaç kişilik"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -156,6 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Zaman"
+                    android:layout_marginStart="4dp"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -171,7 +190,8 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@color/DarkSalmon"
-            android:text="Malzemeler" />
+            android:text="Malzemeler"
+            android:layout_marginBottom="5dp"/>
 
             <TextView
                 android:paddingStart="6dp"
@@ -180,7 +200,8 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:text="malzeme listesi"/>
+                android:text="malzeme listesi"
+                android:layout_marginBottom="5dp"/>
 
 
 
@@ -192,7 +213,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/DarkSalmon"
-            android:text="Nasıl Yapılır" />
+            android:text="Nasıl Yapılır"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:id="@+id/detail_cookstep"
@@ -200,7 +222,8 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:text="yapım aşaması" />
+            android:text="yapım aşaması"
+            android:layout_marginBottom="10dp"/>
 
     </LinearLayout>
 

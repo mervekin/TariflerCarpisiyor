@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.icu.number.IntegerWidth;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +17,8 @@ import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.Login.SignInActivity;
+import com.mervebozkurt.tariflercarpisiyor.Profile.EditProfileActivity;
+import com.mervebozkurt.tariflercarpisiyor.Profile.ShowProfile;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SignInActivity.class));
             finish();
 
+        }else if(item.getItemId()==R.id.editProfile){
+            startActivity(new Intent(MainActivity.this, ShowProfile.class));
         }
 
 

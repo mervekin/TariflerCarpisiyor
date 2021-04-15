@@ -3,6 +3,7 @@ package com.mervebozkurt.tariflercarpisiyor.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.mervebozkurt.tariflercarpisiyor.ShowRecipeByCategoryActivity;
 

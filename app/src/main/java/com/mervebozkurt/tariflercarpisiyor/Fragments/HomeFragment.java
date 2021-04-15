@@ -49,8 +49,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -69,9 +67,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         firebaseFirestore=FirebaseFirestore.getInstance();
         firebaseAuth=FirebaseAuth.getInstance();
+
         getDataFromFireStore();
-
-
 
 
         return inflater.inflate(R.layout.fragment_home, container, false);
@@ -87,24 +84,21 @@ public class HomeFragment extends Fragment {
         //verileri homerecyler view de kullanmak için oraya gönderiyoruz
         homeRecyclerAdapter=new HomeRecyclerAdapter(UserNameFromFB,MealNameFromFB,MealImageFromFB,MealPortionFromFB,MealScoreFromFB,MealTimeFromFB);
         recyclerView.setAdapter(homeRecyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
     }
 
 
     public void getDataFromFireStore(){
-
-        CollectionReference collectionReference=firebaseFirestore.collection("Recipes");
-
         //tüm veriler burada querysnapshotta veriler güncellendikçe buraya değişikliiikler yansıyor
         //verileri filtreleme yaparak çekmek istersek addSnapshotListenerdan önce belirteceğiz.
+
+        CollectionReference collectionReference=firebaseFirestore.collection("Recipes");
         collectionReference.orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                 if(error!=null){
-                    Toast.makeText(getContext(),error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(),error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }
                 if(value!=null){
                     for(DocumentSnapshot snapshot:value.getDocuments()){
@@ -113,13 +107,15 @@ public class HomeFragment extends Fragment {
 
                         //Casting
                         String useremail =(String)data.get("useremail");
-                        String username=(String)data.get("username");
+                        String username=(String)data.get("fname");
                         String category=(String)data.get("category");
                         String mealname=(String)data.get("mealname");
                         String ingredientslist=(String)data.get("ingredientslist");
                         String cookingstep=(String)data.get("cookingstep");
+                        String cookingtime= (String)data.get("cookingtime");
+                        String mealportion=(String)data.get("mealportion");
                         String downloadUrl=(String)data.get("downloadUrl");
-                        System.out.println(username);
+                        System.out.println(cookingtime);
 
                         //array atadık gelen verileri
                         UserNameFromFB.add(username);
@@ -127,18 +123,20 @@ public class HomeFragment extends Fragment {
                         CookingStepFromFB.add(cookingstep);
                         IngredientsListFromFB.add(ingredientslist);
                         CategoriesFromFB.add(category);
+                        MealPortionFromFB.add(mealportion);
+                        MealTimeFromFB.add(cookingtime);
                         MealImageFromFB.add(downloadUrl);
-
+                        System.out.println(MealPortionFromFB);
                         homeRecyclerAdapter.notifyDataSetChanged();
 
 
-
-
-
                     }
+
                 }
             }
         });
+
+
 
     }
 

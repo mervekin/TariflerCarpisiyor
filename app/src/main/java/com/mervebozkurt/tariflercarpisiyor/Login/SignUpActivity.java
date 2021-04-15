@@ -96,6 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             //doğrulma linki gönder
                             FirebaseUser fuser=Auth.getCurrentUser();
+                            assert fuser != null;
                             fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -126,7 +127,9 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.d(TAG,"Hata"+e.toString());
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            intent.putExtra("userName",UserName);
+                            startActivity(intent);
                             finish();
                         }else{
                             Toast.makeText(SignUpActivity.this,"Hata!"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();

@@ -3,17 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.CategoriesFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar2"
-        android:background="#E91E63"/>
+        app:title="@string/title_Categories"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/colorPrimaryLight"
+        android:layout_marginBottom="1dp"/>
+
     <ListView
         android:id="@+id/categoryListView"
-        android:layout_below="@id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar2" />
 
 </FrameLayout>

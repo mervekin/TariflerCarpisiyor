@@ -40,7 +40,7 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        imageArray=new int[]{R.drawable.tavuk,R.drawable.corba,R.drawable.et,R.drawable.makarna,R.drawable.pilav,R.drawable.hamur,R.drawable.tatli,R.drawable.kurabiye,R.drawable.pasta,R.drawable.salata};
+        imageArray=new int[]{R.drawable.tavuk,R.drawable.corba,R.drawable.et,R.drawable.makarna,R.drawable.pilav,R.drawable.hamur,R.drawable.tatli,R.drawable.kurabiye,R.drawable.pasta,R.drawable.salata,R.drawable.anne};
         categoryNameArray=getResources().getStringArray(R.array.RecipesCategories);
         System.out.println("resim"+imageArray[3]);
 

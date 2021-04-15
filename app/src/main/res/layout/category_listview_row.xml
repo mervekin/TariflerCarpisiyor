@@ -5,21 +5,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        app:cardCornerRadius="7dp"
         android:elevation="7dp">
 
         <ImageView
             android:id="@+id/imageViewCategorylist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+
             android:scaleType="centerCrop"
             android:src="@drawable/tatli"
             />
@@ -42,8 +41,5 @@
             android:textSize="24sp"
             android:visibility="visible"/>
 
-    </androidx.cardview.widget.CardView>
-
-
-
+    </FrameLayout>
 </RelativeLayout>

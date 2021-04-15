@@ -6,4 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".ShowRecipeByCategoryActivity">
 
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/recycler_CategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Çorbalar"
+        android:textAlignment="viewStart"
+        android:textColor="@color/Brown4"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/category_recylerview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recylerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_CategoryName" />
 </androidx.constraintlayout.widget.ConstraintLayout>
