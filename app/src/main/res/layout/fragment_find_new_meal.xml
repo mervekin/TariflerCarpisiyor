@@ -1,69 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    tools:context=".Fragments.FindNewMealFragment">
-    <TextView
-        android:id="@+id/textViewProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/edit_profile"
-        android:textColor="@color/colorSecondaryDark"
-        android:textSize="40sp"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginBottom="30dp"/>
-    <EditText
-        android:id="@+id/et_name_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:drawablePadding="7dp"
-        android:drawableLeft="@drawable/ic_action_account_box_black"
-        android:paddingLeft="10dp"
-        android:hint="Name"
-        android:ems="10"
-        android:inputType="textPersonName|textCapSentences"
-        />
-    <EditText
-        android:id="@+id/et_surname_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:drawablePadding="7dp"
-        android:drawableLeft="@drawable/ic_action_mail_black"
-        android:paddingStart="10dp"
-        android:hint="Surname"
-        android:ems="10"
-        android:inputType="textPersonName|textCapSentences"
-        />
-    <EditText
-        android:id="@+id/et_phone_up"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:drawablePadding="7dp"
-        android:drawableLeft="@drawable/ic_action_phone_black"
-        android:paddingStart="10dp"
-        android:hint="Surname"
-        android:ems="10"
-        android:inputType="number"/>
+    tools:context=".Fragments.FindNewMealFragment"
+    android:background="@color/colorPrimaryLight">
 
+
+    <TextView
+        android:id="@+id/instructionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="61dp"
+        android:text="@string/ingredient_instruction"
+        android:textAlignment="center"
+        android:textColor="@color/colorSecondaryDark"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/ingredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="67dp"
+        android:ems="15"
+        android:textSize="18sp"
+        android:hint="@string/ingredient"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorSecondaryDark" />
 
     <Button
+        android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/ok"
-        android:id="@+id/btnSaveButton"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:background="@drawable/custom_button"
-        android:textColor="@color/colorPrimaryDark"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/colorAccent"
+        android:text="@string/search_button"
+        android:textColor="@color/colorPrimaryLight"
+        android:textSize="30sp" />
+
 
 </LinearLayout>

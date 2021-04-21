@@ -46,7 +46,7 @@ public class UpdateUserProfile extends AppCompatActivity {
     private StorageReference storageReference;
     private DocumentReference documentReference;
 
-    private EditText etName,etSurname,etPhone;
+    private EditText etName,etSurname,etPhone,etInfo;
     private TextView Email;
     ProgressBar progressBar;
     Button btnsave;
@@ -70,6 +70,7 @@ public class UpdateUserProfile extends AppCompatActivity {
         etName=findViewById(R.id.et_name_up);
         etSurname=findViewById(R.id.et_surname_up);
         etPhone=findViewById(R.id.et_phone_up);
+        etInfo=findViewById(R.id.et_info_up);
         btnsave=findViewById(R.id.btnSaveButton_up);
         progressBar=findViewById(R.id.progressbar_up);
 
@@ -88,6 +89,8 @@ public class UpdateUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateUser();
+                startActivity(new Intent(UpdateUserProfile.this,ShowProfile.class));
+
             }
         });
 
@@ -123,9 +126,11 @@ public class UpdateUserProfile extends AppCompatActivity {
 
 
     private void UpdateUser(){
+
         final String name = etName.getText().toString();
         final String surname = etSurname.getText().toString();
         final String phoneno = etPhone.getText().toString();
+        final String info=etInfo.getText().toString();
         final String userid=firebaseAuth.getUid();
 
         if(imageUri!=null){
@@ -159,7 +164,9 @@ public class UpdateUserProfile extends AppCompatActivity {
                                         transaction.update(sfDocRef,"name",name);
                                         transaction.update(sfDocRef,"surname",surname);
                                         transaction.update(sfDocRef,"phone",phoneno);
+                                        transaction.update(sfDocRef,"info",info);
                                         transaction.update(sfDocRef,"url",downloadUri.toString());
+
 
 
 
@@ -204,6 +211,7 @@ public class UpdateUserProfile extends AppCompatActivity {
                     transaction.update(sfDocRef,"name",name);
                     transaction.update(sfDocRef,"surname",surname);
                     transaction.update(sfDocRef,"phone",phoneno);
+                    transaction.update(sfDocRef,"info",info);
                     return null;
                 }
             }).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -236,12 +244,14 @@ public class UpdateUserProfile extends AppCompatActivity {
                             String name=task.getResult().getString("name");
                             String surname=task.getResult().getString("surname");
                             String phone=task.getResult().getString("phone");
+                            String info=task.getResult().getString("info");
                             //String Url=task.getResult().getString("url");
 
                            // Picasso.get().load(Url).into(imageProfile);
                             etName.setText(name);
                             etSurname.setText(surname);
                             etPhone.setText(phone);
+                            etInfo.setText(info);
 
 
                         }

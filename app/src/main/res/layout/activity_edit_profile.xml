@@ -82,6 +82,17 @@
                 android:layout_margin="10dp"
                 android:autoText="true"
                 android:backgroundTint="@color/colorPrimary"/>
+            <EditText
+                android:id="@+id/EditTextInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName|textCapSentences"
+                android:hint="@string/info"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_margin="10dp"
+                android:autoText="true"
+                android:backgroundTint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/textViewEmailAdress"
@@ -91,7 +102,7 @@
                 android:ems="10"
                 android:layout_margin="10dp"
                 android:text="@string/email_address"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/ColorSecondaryText"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

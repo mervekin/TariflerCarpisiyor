@@ -53,7 +53,7 @@ import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity  {
 
-    private EditText Name,Surname,Phone;
+    private EditText Name,Surname,Phone,Info;
     private TextView Email;
     ProgressBar progressBar;
     Button btnsave;
@@ -70,6 +70,8 @@ public class EditProfileActivity extends AppCompatActivity  {
     public FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private DocumentReference documentReference;
+    private DocumentReference documentReference2;
+    FirebaseUser firebaseUser;
 
 
     @Override
@@ -84,6 +86,8 @@ public class EditProfileActivity extends AppCompatActivity  {
         Phone=findViewById(R.id.EditTextPhone);
         btnsave=findViewById(R.id.btnSaveButton);
         progressBar=findViewById(R.id.progressbar_cp);
+        Email=findViewById(R.id.textViewEmailAdress);
+        Info=findViewById(R.id.EditTextInfo);
 
         firebaseAuth=FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser()==null){
@@ -92,9 +96,13 @@ public class EditProfileActivity extends AppCompatActivity  {
         }
         firebaseStorage=FirebaseStorage.getInstance();//resim
         firebaseFirestore=FirebaseFirestore.getInstance();//bilgi
+        firebaseUser=firebaseAuth.getCurrentUser();
 
         documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
+        documentReference2=firebaseFirestore.collection("users").document(firebaseAuth.getUid());
         storageReference=firebaseStorage.getInstance().getReference("profile image");
+
+
 
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +112,7 @@ public class EditProfileActivity extends AppCompatActivity  {
         });
 
         //userInformation();
+        //onStart();
 
 
     }
@@ -137,6 +146,9 @@ public class EditProfileActivity extends AppCompatActivity  {
         final String name = Name.getText().toString().trim();
         final String surname = Surname.getText().toString().trim();
         final String phoneno = Phone.getText().toString().trim();
+       final String info=Info.getText().toString().trim();
+
+        final String email=firebaseUser.getEmail();
 
         if(!TextUtils.isEmpty(name)|| !TextUtils.isEmpty(surname)||!TextUtils.isEmpty(phoneno)){
 
@@ -162,6 +174,8 @@ public class EditProfileActivity extends AppCompatActivity  {
                                 profile.put("name",name);
                                 profile.put("surname",surname);
                                 profile.put("phone",phoneno);
+                                profile.put("email",email);
+                                profile.put("info",info);
                                 profile.put("url",downloadUri.toString());
 
                                 documentReference.set(profile)
@@ -173,6 +187,7 @@ public class EditProfileActivity extends AppCompatActivity  {
                                                 Toast.makeText(EditProfileActivity.this,"Profil tamamlandı.",Toast.LENGTH_SHORT).show();
                                                 Intent intent=new Intent(EditProfileActivity.this,ShowProfile.class);
                                                 startActivity(intent);
+                                                finish();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
@@ -202,7 +217,7 @@ public class EditProfileActivity extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-        documentReference.get()
+        documentReference2.get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -210,12 +225,17 @@ public class EditProfileActivity extends AppCompatActivity  {
                             String name=task.getResult().getString("name");
                             String surname=task.getResult().getString("surname");
                             String phone=task.getResult().getString("phone");
+                            String email=task.getResult().getString("email");
+                            String info=task.getResult().getString("info");
                             String Url=task.getResult().getString("url");
 
                             Picasso.get().load(Url).into(profilePicIV);
                             Name.setText(name);
                             Surname.setText(surname);
                             Phone.setText(phone);
+                            Info.setText(info);
+                            Email.setText(email);
+
 
 
                         }

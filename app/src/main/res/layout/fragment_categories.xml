@@ -7,18 +7,17 @@
     tools:context=".Fragments.CategoriesFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toolbar2"
-        app:title="@string/title_Categories"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/colorPrimaryLight"
-        android:layout_marginBottom="1dp"/>
+        app:title="@string/title_Categories"
+        app:titleTextColor="@color/colorPrimaryLight" />
 
     <ListView
         android:id="@+id/categoryListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar2" />
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

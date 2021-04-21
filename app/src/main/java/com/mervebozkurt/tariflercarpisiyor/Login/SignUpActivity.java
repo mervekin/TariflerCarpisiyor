@@ -33,7 +33,7 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
     public static final String TAG = "TAG";
     private FirebaseAuth Auth;
-    EditText mUserName,mEmail,mPassword;
+    EditText mUserName,mFirstName,mSurname,mEmail,mPassword;
     Button mSignUpBtn;
     TextView mSignInbtn;
     ProgressBar progressBar;
@@ -49,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         mUserName=findViewById(R.id.TextUserName);
+        mFirstName=findViewById(R.id.et_FirstName);
+        mSurname=findViewById(R.id.et_SurName);
         mEmail=findViewById(R.id.TextEmail);
         mPassword=findViewById(R.id.TextPassword);
         mSignUpBtn=findViewById(R.id.btnSignUp);
@@ -71,6 +73,8 @@ public class SignUpActivity extends AppCompatActivity {
                 final String email=mEmail.getText().toString().trim();
                 String password=mPassword.getText().toString().trim();
                 final  String UserName=mUserName.getText().toString();
+                final String firstName=mFirstName.getText().toString();
+                final String surname=mSurname.getText().toString();
 
 
                 if (TextUtils.isEmpty(email)){
@@ -112,10 +116,14 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this,"Kullanıcı Oluşturuldu.",Toast.LENGTH_SHORT).show();
 
                             UserID=Auth.getCurrentUser().getUid();
+                            String reference= System.currentTimeMillis()+"."+R.drawable.ic_action_account_box_black;
                             DocumentReference documentReference=fStore.collection("users").document(UserID);
                             Map<String,Object> user=new HashMap<>();
-                            user.put("fName",UserName);
+                            user.put("username",UserName);
+                            user.put("name",firstName);
+                            user.put("surname",surname);
                             user.put("email",email);
+                            
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

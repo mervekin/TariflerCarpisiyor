@@ -10,8 +10,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.CategoriesFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
@@ -23,7 +28,9 @@ import com.mervebozkurt.tariflercarpisiyor.Profile.ShowProfile;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    //private FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore;
+    private DocumentReference documentReference;
+
 
     //navbar kısmı
     private BottomNavigationView NavbarView;
@@ -77,8 +84,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater=getMenuInflater();
         menuInflater.inflate(R.menu.recipe_option_menu,menu);
-
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -88,13 +93,27 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.UploadNewRecipe){
             startActivity(new Intent(MainActivity.this,UploadRecipeActivity.class));
 
-        } else if(item.getItemId()==R.id.signout){
+        }else if(item.getItemId()==R.id.home){
+            startActivity(new Intent(MainActivity.this,MainActivity.class));
+        }
+        else if(item.getItemId()==R.id.signout){
             firebaseAuth.signOut();
             startActivity(new Intent(MainActivity.this, SignInActivity.class));
             finish();
 
         }else if(item.getItemId()==R.id.editProfile){
-            startActivity(new Intent(MainActivity.this, ShowProfile.class));
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.getResult().exists()){
+                        startActivity(new Intent(MainActivity.this, ShowProfile.class));
+                    }
+                    else{
+                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+                    }
+                }
+            });
+
         }
 
 
@@ -105,6 +124,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseFirestore=FirebaseFirestore.getInstance();
+
+       documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
+
+        if(firebaseAuth.getCurrentUser()==null){
+            finish();
+            startActivity(new Intent(getApplicationContext(), SignInActivity.class));
+        }
 
         loadFragment(new HomeFragment());
         //navbar
@@ -112,10 +140,9 @@ public class MainActivity extends AppCompatActivity {
         NavbarView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         NavbarView.setItemIconTintList(null);//bu ne imiş araştır
 
-        firebaseAuth=FirebaseAuth.getInstance();
-
-
     }
+
+
 
 
 

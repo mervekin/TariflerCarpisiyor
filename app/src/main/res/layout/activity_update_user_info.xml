@@ -57,9 +57,21 @@ tools:context=".Profile.UpdateUserProfile">
     android:drawablePadding="7dp"
     android:drawableLeft="@drawable/ic_action_phone_black"
     android:paddingStart="10dp"
-    android:hint="Surname"
+    android:hint="Phone"
     android:ems="10"
     android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/et_info_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:drawablePadding="7dp"
+        android:drawableLeft="@drawable/ic_action_info_black"
+        android:paddingStart="10dp"
+        android:hint="Info"
+        android:ems="10"
+        android:inputType="text"/>
 
 
 <Button

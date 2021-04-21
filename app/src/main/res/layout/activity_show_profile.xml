@@ -26,6 +26,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:onClick="SelectProfileImage"
                 android:foreground="@drawable/rounded"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -118,7 +119,7 @@
         <TextView
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Phone"
+            android:text="Email"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:layout_marginLeft="30dp"
@@ -135,7 +136,34 @@
             android:textAlignment="viewStart"
             android:id="@+id/mail_tv_sp"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
 
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Hakkımda"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hakkımda"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textAlignment="viewStart"
+            android:id="@+id/info_tv_sp"/>
+
+
+    </LinearLayout>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -32,10 +32,15 @@
     <string name="email_address">Email Address</string>
     <string name="mail_address">Mail Adress</string>
     <string name="log_out">Çıkış Yap</string>
-    <string name="edit_profile">Profil</string>
+    <string name="edit_profile">Profilinizi tamamlayınız</string>
     <string name="enter_your_name">İsminizi düzenleyiniz</string>
     <string name="enter_your_surname">Soy isminizi düzenleyiniz</string>
     <string name="enter_your_phone_number">Telefon numaranızı giriniz</string>
     <string name="ok">Kaydet</string>
+    <string name="ingredient">Malzemeyi giriniz</string>
+    <string name="search_button">Tarifleri bul</string>
+    <string name="saved_button">Tarifi Favorilere ekle</string>
+    <string name="ingredient_instruction">Buzdolabınızda bulunan malzemeleri virgülle ayırarak girerek tarifleri bulun</string>
+    <string name="info">Hakkınızda kısmı</string>
 
 </resources>

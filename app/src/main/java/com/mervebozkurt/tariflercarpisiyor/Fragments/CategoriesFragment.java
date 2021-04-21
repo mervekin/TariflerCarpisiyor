@@ -44,6 +44,7 @@ public class CategoriesFragment extends Fragment {
         categoryNameArray=getResources().getStringArray(R.array.RecipesCategories);
         System.out.println("resim"+imageArray[3]);
 
+
         listViewCategory=view.findViewById(R.id.categoryListView);
 
         CategoryNamesAdapter adapter= new CategoryNamesAdapter(view.getContext(),categoryNameArray,imageArray);
