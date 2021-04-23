@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    android:background="#d3efde"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="10dp">
+    <LinearLayout
+        android:layout_width="384dp"
+        android:layout_height="170dp"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:elevation="7dp">
-
-        <ImageView
-            android:id="@+id/imageViewCategorylist"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="180dp">
 
-            android:scaleType="centerCrop"
-            android:src="@drawable/tatli"
-            />
+            <ImageView
+                android:id="@+id/imageViewCategorylist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tatli" />
 
-        <TextView
-            android:id="@+id/textviewCategorylist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="0.35"
-            android:background="@color/Salmon"
-            android:gravity="center"
-            android:paddingBottom="2dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"
-            android:paddingTop="2dp"
-            android:textColor="@color/white"
-            android:text="Category"
-            android:textSize="24sp"
-            android:visibility="visible"/>
+            <TextView
+                android:id="@+id/textviewCategorylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="0.35"
+                android:background="@color/Salmon"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="2dp"
+                android:textColor="@color/white"
+                android:text="Category"
+                android:textSize="24sp"
+                android:visibility="visible"/>
 
-    </FrameLayout>
-</RelativeLayout>
+        </FrameLayout>
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

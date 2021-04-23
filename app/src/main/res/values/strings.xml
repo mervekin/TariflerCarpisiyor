@@ -2,12 +2,12 @@
     <string name="app_name">TariflerCarpisiyor</string>
 
     <string-array name="RecipesCategories">
-        <item>Tavuk Yemekler</item>
-        <item>Çorba Tarifleri</item>
-        <item>Et Yemekleri</item>
-        <item>Makarnalar</item>
+        <item>+Tavuk Yemekler</item>
+        <item>+Çorba Tarifleri</item>
+        <item>+Et Yemekleri</item>
+        <item>+Makarnalar</item>
         <item>Pilavlar</item>
-        <item>Hamur İşleri</item>
+        <item>+Hamur İşleri</item>
         <item>Tatlılar</item>
         <item>Kurabiyeler</item>
         <item>Pastalar ve Kekler</item>

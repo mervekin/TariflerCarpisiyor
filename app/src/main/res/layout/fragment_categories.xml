@@ -6,17 +6,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.CategoriesFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:background="@color/colorPrimary"
-        app:title="@string/title_Categories"
-        app:titleTextColor="@color/colorPrimaryLight" />
-
-    <ListView
-        android:id="@+id/categoryListView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
+        android:id="@+id/categoryRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

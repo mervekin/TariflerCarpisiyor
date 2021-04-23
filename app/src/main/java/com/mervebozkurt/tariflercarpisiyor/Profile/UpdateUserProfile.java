@@ -89,6 +89,7 @@ public class UpdateUserProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UpdateUser();
+                onStart();
                 startActivity(new Intent(UpdateUserProfile.this,ShowProfile.class));
 
             }

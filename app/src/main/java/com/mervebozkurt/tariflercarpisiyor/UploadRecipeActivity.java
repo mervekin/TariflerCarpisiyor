@@ -112,10 +112,13 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             String downloadUrl=uri.toString();
 
                             FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+                                String userEmail=firebaseUser.getEmail();
+                                String userName=firebaseUser.getDisplayName();
+                                String uid=firebaseUser.getUid();
 
-                            String userEmail=firebaseUser.getEmail();
-                            String userName=firebaseUser.getDisplayName();
-                            String uid=firebaseUser.getUid();
+
+
+
 
 
                             String mealName=MealName.getText().toString();
