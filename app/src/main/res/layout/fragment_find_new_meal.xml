@@ -22,11 +22,47 @@
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/ingredient"
+        android:id="@+id/ingredient1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="67dp"
+        android:layout_marginTop="50dp"
+        android:ems="15"
+        android:textSize="18sp"
+        android:hint="@string/ingredient"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorSecondaryDark" />
+    <EditText
+        android:id="@+id/ingredient3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:ems="15"
+        android:textSize="18sp"
+        android:hint="@string/ingredient"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorSecondaryDark" />
+    <EditText
+        android:id="@+id/ingredient4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:ems="15"
+        android:textSize="18sp"
+        android:hint="@string/ingredient"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textColorHint="@color/colorSecondaryDark" />
+    <EditText
+        android:id="@+id/ingredient2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:ems="15"
         android:textSize="18sp"
         android:hint="@string/ingredient"

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home" android:title="Ana Sayfa"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_baseline_refresh"
+        app:showAsAction="always"
+        android:orderInCategory="0"
+        android:visible="false"
+        android:title="Yenile"
+        />
+    <item android:id="@+id/home"
+        android:icon="@drawable/ic_action_home"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        android:title="Ana Sayfa"
+        />
     <item android:id="@+id/UploadNewRecipe" android:title="Yeni Tarif Ekle" ></item>
     <item android:id="@+id/editProfile" android:title="Profili Düzenle"></item>
     <item android:id="@+id/signout" android:title="Çıkış Yap"></item>

@@ -176,7 +176,15 @@
             android:layout_marginTop="50dp"
             android:id="@+id/floatingbtn_sp"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="729dp" />
 
 
 

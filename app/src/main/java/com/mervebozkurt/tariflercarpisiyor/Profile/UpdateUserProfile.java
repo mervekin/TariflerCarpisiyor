@@ -90,7 +90,10 @@ public class UpdateUserProfile extends AppCompatActivity {
             public void onClick(View v) {
                 UpdateUser();
                 onStart();
-                startActivity(new Intent(UpdateUserProfile.this,ShowProfile.class));
+                Intent intent=new Intent(UpdateUserProfile.this,ShowProfile.class);
+                intent.putExtra("Flag", "123");
+                startActivity(intent);
+
 
             }
         });

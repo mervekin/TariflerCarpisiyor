@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mervebozkurt.tariflercarpisiyor.EachMealRecipeActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
+import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 @Override
                 public void onClick(View view) {
 
-                    Intent intent=new Intent(view.getContext(), EachMealRecipeActivity.class);
+                    Intent intent=new Intent(view.getContext(), RecipeDetailActivity.class);
                     intent.putExtra("position",mealNameList.get(position));
 
                     System.out.println(mealNameList.get(position));

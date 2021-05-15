@@ -25,22 +25,21 @@
 
             <ImageView
                 android:id="@+id/recyclerview_row_meal_imageView"
-                android:layout_width="150dp"
+                android:layout_width="140dp"
                 android:layout_height="140dp"
                 app:srcCompat="@drawable/ic_launcher_background"
                 />
-
             <TextView
                 android:id="@+id/recyclerview_row_user_name"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="tarifin sahibi"
                 android:layout_gravity="center"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
 
-
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,9 +94,6 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="4dp"/>
 
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="5dp" />
 
                 </LinearLayout>
 
@@ -158,6 +154,40 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="4dp"/>
                 </LinearLayout>
+
+            </LinearLayout>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="10dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="right"
+                android:weightSum="2">
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/btn_update"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_action_edit_black"
+                    android:layout_gravity="center"
+                    app:tint="@color/colorPrimaryDark"
+                    android:layout_marginRight="10dp"
+                   />
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/btn_delete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_action_delete_black"
+                    android:layout_gravity="center"
+                    app:tint="@color/colorPrimaryDark"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    />
 
             </LinearLayout>
 

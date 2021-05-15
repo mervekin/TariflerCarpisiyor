@@ -1,27 +1,32 @@
 package com.mervebozkurt.tariflercarpisiyor.Adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mervebozkurt.tariflercarpisiyor.EachMealRecipeActivity;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
+import com.google.firebase.firestore.DocumentId;
+import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
+import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
+import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
+import com.mervebozkurt.tariflercarpisiyor.RecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.PostHolder> {
-    private static final String TAG = "HomeRecyclerAdapter";
-    private LayoutInflater layoutInflater;
+public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
     private ArrayList<String> userNameList;
     private ArrayList<String>  mealNameList;
     private ArrayList<String>  mealImageList;
@@ -29,9 +34,11 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private ArrayList<String> mealTimeList;
     private ArrayList<String>  mealPortionList;
     ProgressBar progressBar;
+    public FragmentActivity context;
+
 
     private View.OnClickListener mOnItemClickListener;
-  //burdan bir obje oluşturlması gerekirse bunları vermesi gerekn bir bir constracture oluşturmak gerek
+    //burdan bir obje oluşturlması gerekirse bunları vermesi gerekn bir bir constracture oluşturmak gerek
 
     public HomeRecyclerAdapter(ArrayList<String> userNameList, ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealPortionList,ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
         this.userNameList = userNameList;
@@ -46,44 +53,66 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
     @NonNull
     @Override //view holder oluşturunca ne yapacagım.bir Post holder göderecek xml ve reccler birbirine bağlayacagız layout inflater ile
-    public PostHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
+    public RecipeViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
 
         View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.home_recycler_row,parent,false);
 
 
 
-        return new PostHolder(view);
+        return new RecipeViewHolder(view);
     }
 
     @Override // view holdera bağlanınca ne yapacagım
-    public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position) {
 
 
-            if(mealTimeList!=null) {
-                holder.MealName.setText(mealNameList.get(position));
-                holder.UserName.setText(userNameList.get(position));
-                holder.MealPortion.setText(mealPortionList.get(position));
-                holder.MealTime.setText(mealTimeList.get(position));
+        if(mealTimeList!=null) {
+            holder.MealName.setText(mealNameList.get(position));
+            holder.UserName.setText(userNameList.get(position));
+            holder.MealPortion.setText(mealPortionList.get(position));
+            holder.MealTime.setText(mealTimeList.get(position));
 
-                Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
+            Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
 
+            holder.UserName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment myProfileFragment=new MyProfileFragment();
+                    // pushFragment(myProfileFragment,context);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+              /*MyProfileFragment fragment = new MyProfileFragment();
+              FragmentManager fragmentManager = (context).getFragmentManager();
+              fragmentManager.beginTransaction()
+                      .replace(R.id.homefragment, fragment,fragment.getTag())
+                      .commit();*/
 
-                Intent intent=new Intent(view.getContext(), EachMealRecipeActivity.class);
-                intent.putExtra("position",mealNameList.get(position));
+                    //Fragment fragment= new FindNewMealFragment();
+             /* Intent intent= new Intent(v.getContext(),new MyProfileFragment().getClass());
+              intent.putExtra("userId",userNameList.get(position));
+              System.out.println(userNameList.get(position));
+              v.getContext().startActivity(intent);*/
 
-                System.out.println(mealNameList.get(position));
-                view.getContext().startActivity(intent);
+                }
+            });
 
-            }
-        });
-            }
-            else{
-               System.out.println("hata var");
-            }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent=new Intent(view.getContext(), RecipeDetailActivity.class);
+                    intent.putExtra("position",mealNameList.get(position));
+                    intent.putExtra("userID",userNameList.get(position));
+                    intent.putExtra("documentID",123 );
+
+                    System.out.println(mealNameList.get(position));
+                    view.getContext().startActivity(intent);
+
+                }
+            });
+        }
+        else{
+            System.out.println("hata var");
+        }
     }
 
     @Override // bizim recyler viewde kaç tane row olduğunu tutacagız.vereceği
@@ -91,37 +120,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         return mealNameList.size();
     }
 
-  /*  public void setOnItemClickListener(View.OnClickListener itemClickListener){
-        mOnItemClickListener=itemClickListener;
-    }*/
+    public void pushFragment(Fragment newFragment, Context context){
 
-    //view holder:görünüm tutucu //oluşturduğumuz text viewleri burda tutacagız
-    public class PostHolder extends RecyclerView.ViewHolder {
-
-        ImageView MealImage;
-        TextView MealName,UserName,MealPortion,MealScore,MealTime;
-
-
-
-
-        public PostHolder(@NonNull View itemView) {
-            super(itemView);
-
-            UserName=itemView.findViewById(R.id.recyclerview_row_user_name);
-            MealImage=itemView.findViewById(R.id.recyclerview_row_meal_imageView);
-            MealName=itemView.findViewById(R.id.recyclerview_row_meal_name);
-            MealPortion=itemView.findViewById(R.id.recyclerview_row_meal_portion);
-            MealScore=itemView.findViewById(R.id.recyclerview_row_meal_score);
-            MealTime=itemView.findViewById(R.id.recyclerview_row_meal_time);
-
-            progressBar=itemView.findViewById(R.id.progressBar);
-
-
-        }
-
+        FragmentTransaction transaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.homefragment, newFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
     }
-
 
 
 }

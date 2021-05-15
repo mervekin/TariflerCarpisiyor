@@ -51,7 +51,7 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
         cUserNameFromFB=new ArrayList<>();
         cMealNameFromFB=new ArrayList<>();
         cCookingStepFromFB=new ArrayList<>();
-        cIngredientsListFromFB=new ArrayList<>();
+        //cIngredientsListFromFB=new ArrayList<>();
         cCategoriesFromFB=new ArrayList<>();
         cMealPortionFromFB=new ArrayList<>();
         cMealScoreFromFB=new ArrayList<>();
@@ -103,7 +103,7 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
                         String username=(String)data.get("fname");
                         String category=(String)data.get("category");
                         String mealname=(String)data.get("mealname");
-                        String ingredientslist=(String)data.get("ingredientslist");
+                        //String ingredientslist=(String)data.get("ingredientslist");
                         String cookingstep=(String)data.get("cookingstep");
                         String cookingtime= (String)data.get("cookingtime");
                         String mealportion=(String)data.get("mealportion");
@@ -118,7 +118,7 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
                         cUserNameFromFB.add(username);
                         cMealNameFromFB.add(mealname);
                         cCookingStepFromFB.add(cookingstep);
-                        cIngredientsListFromFB.add(ingredientslist);
+                       // cIngredientsListFromFB.add(ingredientslist);
                         cCategoriesFromFB.add(category);
                         cMealPortionFromFB.add(mealportion);
                         cMealTimeFromFB.add(cookingtime);

@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mervebozkurt.tariflercarpisiyor.MainActivity;
+import com.mervebozkurt.tariflercarpisiyor.Profile.EditProfileActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
 
 import java.util.HashMap;
@@ -135,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.d(TAG,"Hata"+e.toString());
                                 }
                             });
-                            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                            Intent intent=new Intent(getApplicationContext(), EditProfileActivity.class);
                             intent.putExtra("userName",UserName);
                             startActivity(intent);
                             finish();

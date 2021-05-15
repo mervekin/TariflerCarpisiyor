@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,16 +28,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
+import com.mervebozkurt.tariflercarpisiyor.Profile.ShowProfile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.SortedSet;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class UploadRecipeActivity extends AppCompatActivity {
@@ -48,13 +52,14 @@ public class UploadRecipeActivity extends AppCompatActivity {
     EditText MealName,IngredientsList,CookingStep,CookingTime,MealPortion;
     Spinner spinnerCategory;
     String ChoisenCate;
-
+    String mealID;
 
 
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;// verileri firestore eklerken
     private FirebaseAuth firebaseAuth; //güncel kullanıcı için kullanılacak
+    CollectionReference collectionReference;
 
 
 
@@ -75,6 +80,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
         storageReference=firebaseStorage.getReference();
         firebaseFirestore=FirebaseFirestore.getInstance();
         firebaseAuth=FirebaseAuth.getInstance();
+       collectionReference=firebaseFirestore.collection("Recipes");
 
         ArrayAdapter adapter=ArrayAdapter.createFromResource(this,R.array.RecipesCategories,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,15 +102,18 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
 
     public void UploadRecipe(View view){
-        if(imageData!=null){
+
+     if(imageData!=null){
             //univarsal uniqui id
             UUID uuid=UUID.randomUUID();
             final String imageName="images/" + uuid + ".jpg";
-            storageReference.child(imageName).putFile(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            storageReference.child(imageName).putFile(imageData)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     //Download URL
-                    StorageReference referenceforstorage=FirebaseStorage.getInstance().getReference(imageName);
+                    final StorageReference referenceforstorage=FirebaseStorage.getInstance().getReference(imageName);
+
                     referenceforstorage.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -112,23 +121,29 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             String downloadUrl=uri.toString();
 
                             FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-                                String userEmail=firebaseUser.getEmail();
-                                String userName=firebaseUser.getDisplayName();
-                                String uid=firebaseUser.getUid();
+                            String userEmail=firebaseUser.getEmail();
+                            String userName=firebaseUser.getDisplayName();
+                            String userID=firebaseUser.getUid();
 
-
-
-
-
-
+                            //UUID uuid=UUID.randomUUID();
+                            ///String mealID=uuid + "";
                             String mealName=MealName.getText().toString();
                             String cookingStep=CookingStep.getText().toString();
-                            String ingredientsList=IngredientsList.getText().toString();
                             String cookingTime=CookingTime.getText().toString();
                             String mealPortion=MealPortion.getText().toString();
+                            String ingredientsList=IngredientsList.getText().toString();
+                            String[] ingrArray=ingredientsList.split("\\s+");
+                            List<String> mylist=  Arrays.asList(ingrArray);
+                            FieldValue date=FieldValue.serverTimestamp();
+
+                            mealID=collectionReference.document().getId();
+                            System.out.println("0"+ mealID);
+
+                            final Recipe recipe=new Recipe(mealID,userID,userEmail,userName,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date);
+
 
                             //hashmsaap oluşturacagız
-                            HashMap<String,Object> recipeData=new HashMap<>();
+                            /*HashMap<String,Object> recipeData=new HashMap<>();
                             recipeData.put("username",userName);
                             recipeData.put("useremail",userEmail);
                             recipeData.put("useruid",uid);
@@ -136,18 +151,37 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             recipeData.put("category",ChoisenCate);
                             recipeData.put("mealname",mealName);
                             recipeData.put("cookingstep",cookingStep);
-                            recipeData.put("ingredientslist",ingredientsList);
+                            recipeData.put("ingredientslist",mylist);
                             recipeData.put("mealportion",mealPortion);
                             recipeData.put("cookingtime",cookingTime);
-                            recipeData.put("date", FieldValue.serverTimestamp());
+                            recipeData.put("date", FieldValue.serverTimestamp());*/
 
                             Toast.makeText(UploadRecipeActivity.this,"Başarılı",Toast.LENGTH_SHORT).show();
                             //save to infromation database
 
-                            firebaseFirestore.collection("Recipes").add(recipeData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            firebaseFirestore.collection("Recipes").document(mealID).set(recipe)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Intent intent=new Intent(UploadRecipeActivity.this,MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
+                                            startActivity(intent);
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(UploadRecipeActivity.this,"hata",Toast.LENGTH_LONG).show();
+                                    Intent intent=new Intent(UploadRecipeActivity.this, ShowProfile.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
+                                    startActivity(intent);
+                                }
+                            });
+                                   /* .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     //kullanıcıyı main activitiye geri götürecegiz yani receipe yüklenmiş olacak bu ksımı sonra profil sayfasına götürebilirsin
+
 
                                     Intent intent=new Intent(UploadRecipeActivity.this,MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
@@ -159,9 +193,12 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(UploadRecipeActivity.this,e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                                    Toast.makeText(UploadRecipeActivity.this,"hata",Toast.LENGTH_LONG).show();
+                                    Intent intent=new Intent(UploadRecipeActivity.this, ShowProfile.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
+                                    startActivity(intent);
                                 }
-                            });
+                            });*/
 
 
 

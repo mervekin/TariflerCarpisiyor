@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class ShowProfile extends AppCompatActivity {
     ImageView imageProfile;
     TextView tvName,tvSurname,tvPhone,tvMail,tvInfo;
     FloatingActionButton floatingActionButton;
+    ProgressBar progressBar;
 
     Uri imageUri;
     private static final int PICK_IMAGE=1;
@@ -58,14 +61,29 @@ public class ShowProfile extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater=getMenuInflater();
         menuInflater.inflate(R.menu.recipe_option_menu,menu);
+
         return super.onCreateOptionsMenu(menu);
     }
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem refresh = menu.findItem(R.id.action_refresh);
+        refresh.setVisible(firebaseAuth.getCurrentUser()!=null);
+        return true;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //menu seçeneklerine tıklayınca ne yapması gerektiğini göstereceğiz.
+
         if(item.getItemId()==R.id.UploadNewRecipe){
             startActivity(new Intent(ShowProfile.this, UploadRecipeActivity.class));
+            finish();
+
+        }
+        else if(item.getItemId()==R.id.action_refresh){
+            Intent reload=new Intent(getApplicationContext(),ShowProfile.class);
+            startActivity(reload);
+            finish();
 
         }
         else if(item.getItemId()==R.id.signout){
@@ -110,8 +128,20 @@ public class ShowProfile extends AppCompatActivity {
         tvPhone=findViewById(R.id.phone_tv_sp);
         tvMail=findViewById(R.id.mail_tv_sp);
         tvInfo=findViewById(R.id.info_tv_sp);
+        progressBar=findViewById(R.id.progressBar1);
 
       //  imageProfile.setImageDrawable(getResources().getDrawable(R.drawable.ic_action_account_box_black));
+       Bundle bundle = getIntent().getExtras();
+       if(bundle!=null){
+           String flag=bundle.getString("Flag");
+           System.out.println(flag);
+           if (flag=="123") {
+               progressBar.setVisibility(View.VISIBLE);
+               onStart();
+           }
+
+        }
+       progressBar.setVisibility(View.INVISIBLE);
 
 
 

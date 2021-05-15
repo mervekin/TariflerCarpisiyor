@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mervebozkurt.tariflercarpisiyor.Fragments.AddedRecipes;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.CategoriesFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;

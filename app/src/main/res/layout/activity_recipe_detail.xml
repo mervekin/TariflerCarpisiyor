@@ -2,15 +2,15 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
    >
 <LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EachMealRecipeActivity"
+    tools:context=".RecipeDetailActivity"
     >
 
 
@@ -62,12 +62,14 @@
                 android:rating="0"
                 android:numStars="5"
                 android:stepSize="0.5"/>
+
             <Button
+                android:id="@+id/btn_submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/DarkSalmon"
-                android:id="@+id/btn_submit"
-                android:text="Puanla"/>
+                android:onClick="getRating"
+                android:text="Puanla"
+                android:textColor="@color/DarkSalmon" />
 
         </LinearLayout>
         <TextView

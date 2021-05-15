@@ -11,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RecipeListActivity"></activity>
-        <activity android:name=".Profile.ShowProfile" />
+        <activity android:name=".FoundRecipeListActivity"></activity>
+        <activity android:name=".Profile.ShowProfile">
+
+        </activity>
         <activity android:name=".Profile.UpdateUserProfile" />
         <activity android:name=".Profile.EditProfileActivity" />
         <activity android:name=".ShowRecipeByCategoryActivity" />
-        <activity android:name=".EachMealRecipeActivity" />
+        <activity android:name=".RecipeDetailActivity" />
         <activity android:name=".UploadRecipeActivity" />
         <activity android:name=".Login.SignInActivity">
             <intent-filter>
@@ -24,6 +26,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".Login.SignUpActivity" />
         <activity android:name=".MainActivity" />
