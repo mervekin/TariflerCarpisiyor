@@ -1,6 +1,8 @@
 package com.mervebozkurt.tariflercarpisiyor.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,8 +34,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.AddedRecipesAdapter;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.HomeRecyclerAdapter;
+import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
 import com.mervebozkurt.tariflercarpisiyor.R;
 
 import java.util.ArrayList;
@@ -61,12 +69,13 @@ public class AddedRecipes extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ImageView btndelete=view.findViewById(R.id.btn_delete);
         ImageView btnupdate=view.findViewById(R.id.btn_update);
+        context=getActivity();
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_for_addedrecipe);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        addedRecipesAdapter = new AddedRecipesAdapter(MealIDFromFB,UserNameFromFB, MealNameFromFB, MealImageFromFB, MealPortionFromFB, MealScoreFromFB, MealTimeFromFB);
+        addedRecipesAdapter = new AddedRecipesAdapter(getActivity(),MealIDFromFB,UserNameFromFB, MealNameFromFB, MealImageFromFB, MealPortionFromFB, MealScoreFromFB, MealTimeFromFB);
         recyclerView.setAdapter(addedRecipesAdapter);
 
 
@@ -140,6 +149,10 @@ public class AddedRecipes extends Fragment {
                         MealImageFromFB.add(downloadUrl);
                         MealIDFromFB.add(mealId);
                         System.out.println(MealPortionFromFB);
+                        System.out.println(MealImageFromFB.get(0));
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        final StorageReference photoul = firebaseStorage.getReferenceFromUrl(MealImageFromFB.get(0));
+                        System.out.println(photoul);
                         addedRecipesAdapter.notifyDataSetChanged();
 
 
@@ -150,6 +163,42 @@ public class AddedRecipes extends Fragment {
         });
 
 
+    }
+
+    public void deleteRecipe (Integer position) {
+
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        final StorageReference photoul = firebaseStorage.getReferenceFromUrl(MealImageFromFB.get(position));
+
+
+        FirebaseFirestore.getInstance().collection("Recipes")
+                .document(MealIDFromFB.get(position))
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Good", "tarif Silindi...");
+                        if(photoul!=null)
+                            photoul.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("fd", "onSuccess:silindi");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("fd", "onFailure: did not delete file");
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Hata", "OnFailure", e);
+            }
+        });
+
+        addedRecipesAdapter.notifyDataSetChanged();
     }
 
 

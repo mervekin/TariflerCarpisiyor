@@ -22,7 +22,7 @@ public class Recipe {
     public String Userid;
     public FieldValue date;
 
-    List<String> ingredientlist;
+    List<String> ingredientlist ,search;
 
     public Recipe(){
 
@@ -33,7 +33,7 @@ public class Recipe {
         this.mealname = mealname;
         this.downloadUrl = downloadUrl;
     }
-    public Recipe(String documentId ,String Userid,String useremail, String username, String category, String mealname, String cookingstep, String cookingtime, String mealportion, String downloadUrl, List<String> ingredientlist, FieldValue date) {
+    public Recipe(String documentId ,String Userid,String useremail, String username, String category, String mealname, String cookingstep, String cookingtime, String mealportion, String downloadUrl, List<String> ingredientlist, FieldValue date ,List<String> search) {
         this.documentId=documentId;
         this.Userid=Userid;
         this.useremail = useremail;
@@ -46,12 +46,20 @@ public class Recipe {
         this.downloadUrl = downloadUrl;
         this.ingredientlist = ingredientlist;
         this.date=date;
+        this.search=search;
     }
     public Recipe(Float mealrating){
         this.mealrating=mealrating;
 
     }
 
+    public List<String> getSearch() {
+        return search;
+    }
+
+    public void setSearch(List<String> search) {
+        this.search = search;
+    }
 
     public Float getMealrating() {
         return mealrating;

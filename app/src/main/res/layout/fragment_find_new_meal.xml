@@ -31,6 +31,7 @@
         android:textSize="18sp"
         android:hint="@string/ingredient"
         android:textAlignment="center"
+        android:inputType="textPersonName"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorSecondaryDark" />
     <EditText
@@ -43,6 +44,7 @@
         android:textSize="18sp"
         android:hint="@string/ingredient"
         android:textAlignment="center"
+        android:inputType="textPersonName"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorSecondaryDark" />
     <EditText
@@ -51,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:inputType="textPersonName"
         android:ems="15"
         android:textSize="18sp"
         android:hint="@string/ingredient"
@@ -62,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:inputType="textPersonName"
         android:layout_marginTop="20dp"
         android:ems="15"
         android:textSize="18sp"

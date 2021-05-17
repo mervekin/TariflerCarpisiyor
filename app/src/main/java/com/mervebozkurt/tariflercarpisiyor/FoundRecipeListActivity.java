@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.CategoryRecyclerAdapter;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.FindRecipeAdapter;
+import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ import java.util.Map;
 public class FoundRecipeListActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    TextView categoryName;
+    TextView categoryName,textview;
     ArrayList<String> MealImageFromFB;
     ArrayList<String> UserNameFromFB;
     ArrayList<String> MealNameFromFB;
@@ -45,7 +46,7 @@ public class FoundRecipeListActivity extends AppCompatActivity {
     ArrayList<String> MealTimeFromFB;
     ArrayList<String> cIngredientsListFromUser;
     FindRecipeAdapter findRecipeAdapter;
-
+    String ing1,ing2,ing3,ing4;
     Bundle bundle;
 
 
@@ -68,17 +69,18 @@ public class FoundRecipeListActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
 
+        textview=findViewById(R.id.uyarıtext);
 
 
         Intent recipeintent=getIntent();
-        String ing1,ing2,ing3,ing4;
+
         ing1=recipeintent.getStringExtra("key1");
         ing2=recipeintent.getStringExtra("key2");
         ing3=recipeintent.getStringExtra("key3");
         ing4=recipeintent.getStringExtra("key4");
         List<String> liste= Arrays.asList(ing1,ing2,ing3,ing4);
         cIngredientsListFromUser.addAll(liste);
-        //System.out.println(cIngredientsListFromUser);
+        System.out.println(cIngredientsListFromUser);
 
         RecyclerView recyclerView =findViewById(R.id.recycler_findrecipe);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -90,10 +92,19 @@ public class FoundRecipeListActivity extends AppCompatActivity {
 
     private void getRecipes(){
         CollectionReference collectionReference=firebaseFirestore.collection("Recipes");
-        collectionReference.whereArrayContainsAny("ingredientlist",cIngredientsListFromUser) .get()
+        collectionReference .whereArrayContainsAny("search",cIngredientsListFromUser) .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.isEmpty()){
+                            textview.setVisibility(View.VISIBLE);
+                            textview.setText(ing1 + " " + ing2 + ing3 + ing4 + " ile ilgili tarif bulunamadı");
+                            //startActivity(new Intent(FoundRecipeListActivity.this, FindNewMealFragment.class));
+                           // finish();
+                            //textview.setVisibility(View.INVISIBLE);
+
+                        }
+
                         for (QueryDocumentSnapshot doc:queryDocumentSnapshots){
 
                             //Casting

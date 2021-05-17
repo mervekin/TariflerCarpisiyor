@@ -94,6 +94,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+                ChoisenCate="Anne Tarifleri";
 
             }
         });
@@ -132,14 +133,16 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             String cookingTime=CookingTime.getText().toString();
                             String mealPortion=MealPortion.getText().toString();
                             String ingredientsList=IngredientsList.getText().toString();
-                            String[] ingrArray=ingredientsList.split("\\s+");
+                            String[] ingrArray=ingredientsList.split("\\r?\\n");
                             List<String> mylist=  Arrays.asList(ingrArray);
                             FieldValue date=FieldValue.serverTimestamp();
+                            String[] searchitem=ingredientsList.split("\\s+");
+                            List<String> search=Arrays.asList(searchitem);
 
                             mealID=collectionReference.document().getId();
                             System.out.println("0"+ mealID);
 
-                            final Recipe recipe=new Recipe(mealID,userID,userEmail,userName,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date);
+                            final Recipe recipe=new Recipe(mealID,userID,userEmail,userName,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date,search);
 
 
                             //hashmsaap oluşturacagız
