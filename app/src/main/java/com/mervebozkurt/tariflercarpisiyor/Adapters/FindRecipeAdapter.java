@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
-import com.mervebozkurt.tariflercarpisiyor.RecipeViewHolder;
+import com.mervebozkurt.tariflercarpisiyor.Models.RecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

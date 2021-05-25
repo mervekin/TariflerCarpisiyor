@@ -19,6 +19,7 @@
         <activity android:name=".Profile.EditProfileActivity" />
         <activity android:name=".ShowRecipeByCategoryActivity" />
         <activity android:name=".RecipeDetailActivity" />
+
         <activity android:name=".UploadRecipeActivity" />
         <activity android:name=".Login.SignInActivity">
             <intent-filter>

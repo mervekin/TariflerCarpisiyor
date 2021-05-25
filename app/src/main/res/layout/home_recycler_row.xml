@@ -30,6 +30,7 @@
                 app:srcCompat="@drawable/ic_launcher_background"
                 />
             <TextView
+                android:visibility="invisible"
                 android:id="@+id/recyclerview_row_user_name"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"

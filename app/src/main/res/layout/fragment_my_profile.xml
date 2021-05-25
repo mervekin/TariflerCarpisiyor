@@ -79,11 +79,12 @@
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbarSize="10dp"
         android:minHeight="?actionBarSize"
         app:tabBackground="@color/colorSecondaryDark"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorPrimaryLight"
-        app:tabIndicatorHeight="4dp"
+        app:tabIndicatorHeight="6dp"
         app:tabMode="fixed">
 
     </com.google.android.material.tabs.TabLayout>

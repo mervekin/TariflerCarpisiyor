@@ -57,7 +57,6 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             holder.UserName.setText(userNameList.get(position));
             holder.MealPortion.setText(mealPortionList.get(position));
             holder.MealTime.setText(mealTimeList.get(position));
-
             Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +65,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
 
                     Intent intent=new Intent(view.getContext(), RecipeDetailActivity.class);
                     intent.putExtra("position",mealNameList.get(position));
-
-                    System.out.println(mealNameList.get(position));
                     view.getContext().startActivity(intent);
-
                 }
             });
         }

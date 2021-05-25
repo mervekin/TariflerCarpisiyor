@@ -30,7 +30,6 @@ public class FindNewMealFragment extends Fragment implements View.OnClickListene
     Button mSearchRecipesButton;
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

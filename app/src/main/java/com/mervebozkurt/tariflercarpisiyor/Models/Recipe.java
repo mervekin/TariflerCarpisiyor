@@ -27,12 +27,7 @@ public class Recipe {
     public Recipe(){
 
     }
-    public Recipe(String Userid,String documentId, String mealname,String downloadUrl) {
-        this.Userid=Userid;
-        this.category = category;
-        this.mealname = mealname;
-        this.downloadUrl = downloadUrl;
-    }
+
     public Recipe(String documentId ,String Userid,String useremail, String username, String category, String mealname, String cookingstep, String cookingtime, String mealportion, String downloadUrl, List<String> ingredientlist, FieldValue date ,List<String> search) {
         this.documentId=documentId;
         this.Userid=Userid;
@@ -48,8 +43,18 @@ public class Recipe {
         this.date=date;
         this.search=search;
     }
+    public Recipe(String Userid,String documentId, String mealname,String downloadUrl) {
+        this.Userid=Userid;
+        this.category = category;
+        this.mealname = mealname;
+        this.downloadUrl = downloadUrl;
+    }
     public Recipe(Float mealrating){
         this.mealrating=mealrating;
+
+    }
+    public Recipe(String username){
+        this.username=username;
 
     }
 

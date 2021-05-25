@@ -9,28 +9,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.AddedRecipes;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
 import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
-import com.mervebozkurt.tariflercarpisiyor.RecipeViewHolder;
-import com.mervebozkurt.tariflercarpisiyor.UploadRecipeActivity;
+import com.mervebozkurt.tariflercarpisiyor.Models.RecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -103,14 +95,19 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
                 }
             });
 
+            holder.UpdateRecipe.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
             holder.DeleteRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     /*Recipe recipe = new Recipe(userNameList.get(position), mealIDlist.get(position), mealNameList.get(position), mealImageList.get(position));
                     System.out.println("mealID " + mealIDlist.get(position));
-
                     deleteRecipe(recipe,position);*/
-
                  AlertDialog.Builder alertDialogBuilderLabelDelete = new AlertDialog.Builder(v.getRootView().getContext());
                     alertDialogBuilderLabelDelete.setCancelable(false);
                     alertDialogBuilderLabelDelete.setTitle("Tarifi Sil");

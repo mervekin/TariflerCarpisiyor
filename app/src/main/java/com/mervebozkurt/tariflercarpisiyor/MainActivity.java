@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
 
-       documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
+      // documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
 
         if(firebaseAuth.getCurrentUser()==null){
             finish();

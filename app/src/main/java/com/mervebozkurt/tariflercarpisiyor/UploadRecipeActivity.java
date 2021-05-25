@@ -15,21 +15,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,17 +54,22 @@ public class UploadRecipeActivity extends AppCompatActivity {
     Bitmap selectedImage;
     Uri imageData;
     ImageView selectImage;
-    EditText MealName,IngredientsList,CookingStep,CookingTime,MealPortion;
+    EditText MealName,IngredientsList,CookingStep,CookingTime,MealPortion , textView;
     Spinner spinnerCategory;
     String ChoisenCate;
-    String mealID;
+    String mealID, userID;
+    ProgressBar progressBar;
+    String mealName,cookingStep,cookingTime,mealPortion,downloadUrl;
+    List<String> mylist;
+    FieldValue date;
+    List<String> search;
 
-
-    private FirebaseStorage firebaseStorage;
-    private StorageReference storageReference;
+    private FirebaseStorage firebaseStorage;//image eklemek için
+    private StorageReference storageReference; //referans
     private FirebaseFirestore firebaseFirestore;// verileri firestore eklerken
     private FirebaseAuth firebaseAuth; //güncel kullanıcı için kullanılacak
     CollectionReference collectionReference;
+    FirebaseUser firebaseUser;
 
 
 
@@ -67,7 +77,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_recipe);
-
         selectImage=findViewById(R.id.imageMeal);
         MealName=findViewById(R.id.editMealName);
         IngredientsList=findViewById(R.id.editIngredientsList);
@@ -75,12 +84,15 @@ public class UploadRecipeActivity extends AppCompatActivity {
         spinnerCategory=findViewById(R.id.spinnerCategory);
         CookingTime=findViewById(R.id.EditCookingTime);
         MealPortion=findViewById(R.id.EditMealPortion);
+        progressBar=findViewById(R.id.progressBar);
+        textView=findViewById(R.id.usernames);
 
         firebaseStorage=FirebaseStorage.getInstance();
         storageReference=firebaseStorage.getReference();
         firebaseFirestore=FirebaseFirestore.getInstance();
         firebaseAuth=FirebaseAuth.getInstance();
        collectionReference=firebaseFirestore.collection("Recipes");
+       firebaseUser=firebaseAuth.getCurrentUser();
 
         ArrayAdapter adapter=ArrayAdapter.createFromResource(this,R.array.RecipesCategories,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,20 +103,21 @@ public class UploadRecipeActivity extends AppCompatActivity {
                 String[] categoryArray=getResources().getStringArray(R.array.RecipesCategories);
                 ChoisenCate = (String)categoryArray[i];
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 ChoisenCate="Anne Tarifleri";
 
             }
         });
-    }
 
+
+    }
 
 
     public void UploadRecipe(View view){
 
-     if(imageData!=null){
+        progressBar.setVisibility(View.VISIBLE);
+     if(imageData!=null && ChoisenCate!=null){
             //univarsal uniqui id
             UUID uuid=UUID.randomUUID();
             final String imageName="images/" + uuid + ".jpg";
@@ -119,49 +132,42 @@ public class UploadRecipeActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
 
-                            String downloadUrl=uri.toString();
-
-                            FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
+                            downloadUrl=uri.toString();
+                            userID=firebaseUser.getUid();
                             String userEmail=firebaseUser.getEmail();
-                            String userName=firebaseUser.getDisplayName();
-                            String userID=firebaseUser.getUid();
+                            String username=firebaseUser.getDisplayName();
 
-                            //UUID uuid=UUID.randomUUID();
-                            ///String mealID=uuid + "";
-                            String mealName=MealName.getText().toString();
-                            String cookingStep=CookingStep.getText().toString();
-                            String cookingTime=CookingTime.getText().toString();
-                            String mealPortion=MealPortion.getText().toString();
-                            String ingredientsList=IngredientsList.getText().toString();
-                            String[] ingrArray=ingredientsList.split("\\r?\\n");
-                            List<String> mylist=  Arrays.asList(ingrArray);
-                            FieldValue date=FieldValue.serverTimestamp();
-                            String[] searchitem=ingredientsList.split("\\s+");
-                            List<String> search=Arrays.asList(searchitem);
+                           /* DocumentReference docref=firebaseFirestore.collection("users").document(userID);
+                            docref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    String usernames =(String) documentSnapshot.get("username");
+                                    deneme=new String(usernames);
+                                    recipe1=new Recipe(deneme);
 
+
+                                }
+                            });*/
+
+                            mealName = MealName.getText().toString();
+                            cookingStep = CookingStep.getText().toString();
+                            cookingTime = CookingTime.getText().toString();
+                            mealPortion = MealPortion.getText().toString();
+                            String ingredientsList = IngredientsList.getText().toString();
+                            String[] ingrArray = ingredientsList.split("\\r?\\n");
+                            mylist = Arrays.asList(ingrArray);
+                            date = FieldValue.serverTimestamp();
+                            String ingr = IngredientsList.getText().toString().toLowerCase();
+                            String[] searchitem = ingr.split("\\s+");
+                            search = Arrays.asList(searchitem);
                             mealID=collectionReference.document().getId();
-                            System.out.println("0"+ mealID);
 
-                            final Recipe recipe=new Recipe(mealID,userID,userEmail,userName,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date,search);
-
-
-                            //hashmsaap oluşturacagız
-                            /*HashMap<String,Object> recipeData=new HashMap<>();
-                            recipeData.put("username",userName);
-                            recipeData.put("useremail",userEmail);
-                            recipeData.put("useruid",uid);
-                            recipeData.put("downloadUrl",downloadUrl);
-                            recipeData.put("category",ChoisenCate);
-                            recipeData.put("mealname",mealName);
-                            recipeData.put("cookingstep",cookingStep);
-                            recipeData.put("ingredientslist",mylist);
-                            recipeData.put("mealportion",mealPortion);
-                            recipeData.put("cookingtime",cookingTime);
-                            recipeData.put("date", FieldValue.serverTimestamp());*/
+                           final Recipe recipe=new Recipe(mealID,userID,userEmail,username,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date,search);
 
                             Toast.makeText(UploadRecipeActivity.this,"Başarılı",Toast.LENGTH_SHORT).show();
-                            //save to infromation database
+                            progressBar.setVisibility(View.INVISIBLE);
 
+                            //Firestore verileri kayıt etme adımı
                             firebaseFirestore.collection("Recipes").document(mealID).set(recipe)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
@@ -254,7 +260,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
         //data resim varsa,equestVode galeriye gittiyse result ok gereçekten resmi okayladıyse
         //datayı Url çevirmemiz gerekiyor.
         if(requestCode==2 && resultCode==RESULT_OK && data!=null){
-            imageData=data.getData();   //bunu alıp bitmap olarak çevirmemiz gerekitor.
+            imageData=data.getData();   //bunu alıp bitmap olarak çevirmemiz gerekiyor.
             try {
 
                 if(Build.VERSION.SDK_INT>=28){
@@ -274,4 +280,5 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
 }

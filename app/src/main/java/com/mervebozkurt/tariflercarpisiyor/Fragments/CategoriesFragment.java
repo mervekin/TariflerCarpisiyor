@@ -38,10 +38,6 @@ import java.util.Objects;
 
 public class CategoriesFragment extends Fragment {
 
-    ListView listViewCategory;
-   // int imageArray[];
-    //String[] categoryNameArray;
-
     Context context;
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -75,22 +71,9 @@ public class CategoriesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-       // categoryNameArray=getResources().getStringArray(R.array.RecipesCategories);
-
         categoryNamesAdapter=new CategoryNamesAdapter(context,MealImageFromFB,MealNameFromFB);
         recyclerView.setAdapter(categoryNamesAdapter);
 
-
-
-        //imageArray=new int[]{R.drawable.tavuk,R.drawable.corba,R.drawable.et,R.drawable.makarna,R.drawable.pilav,R.drawable.hamur,R.drawable.tatli,R.drawable.kurabiye,R.drawable.pasta,R.drawable.salata,R.drawable.anne};
-
-       // System.out.println("resim"+imageArray[3]);
-
-
-        //listViewCategory=view.findViewById(R.id.categoryListView);
-
-       // CategoryNamesAdapter adapter= new CategoryNamesAdapter(view.getContext(),categoryNameArray,MealImageFromFB);
-        //listViewCategory.setAdapter(adapter);
 
     }
 

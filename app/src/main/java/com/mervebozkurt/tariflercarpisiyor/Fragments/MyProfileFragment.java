@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -55,6 +56,7 @@ public class MyProfileFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
     }
@@ -62,10 +64,10 @@ public class MyProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
         FirebaseUser user =firebaseAuth.getCurrentUser();
-
 
         return inflater.inflate(R.layout.fragment_my_profile, container, false);
     }
@@ -87,7 +89,7 @@ public class MyProfileFragment extends Fragment {
         PagerAdapter pA=new com.mervebozkurt.tariflercarpisiyor.Adapters.PagerAdapter(getFragmentManager());
        //adding Fragments
         ((com.mervebozkurt.tariflercarpisiyor.Adapters.PagerAdapter) pA).AddFragment(new AddedRecipes(),"Tariflerim");
-        ((com.mervebozkurt.tariflercarpisiyor.Adapters.PagerAdapter) pA).AddFragment(new Favorite(),"Favorilerim");
+        //((com.mervebozkurt.tariflercarpisiyor.Adapters.PagerAdapter) pA).AddFragment(new Favorite(),"");
         //adapter setup
         viewPager.setAdapter(pA);
         //give the tablayout the view pager
@@ -96,8 +98,12 @@ public class MyProfileFragment extends Fragment {
     }
 
     public void getuserinfo(){
+         FirebaseUser user=firebaseAuth.getCurrentUser();
+         String CurrentUserıd=user.getUid();
+        System.out.println(CurrentUserıd);
+
         CollectionReference collectionReference=firebaseFirestore.collection("userinfo");
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collectionReference.whereEqualTo(FieldPath.documentId(),CurrentUserıd).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error!=null){
@@ -112,7 +118,7 @@ public class MyProfileFragment extends Fragment {
                         String downloadurl= (String) userdata.get("url");
 
                     Picasso.get().load(downloadurl).into(imageProfile);
-                    tvName.setText(name +""+surname);
+                    tvName.setText(name +"  "+surname);
                     tvInfo.setText(info);
                         System.out.println(info);
                     }
