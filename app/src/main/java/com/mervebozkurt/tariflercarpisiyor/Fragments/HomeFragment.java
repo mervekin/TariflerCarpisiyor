@@ -1,17 +1,15 @@
 package com.mervebozkurt.tariflercarpisiyor.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -88,10 +86,11 @@ public class HomeFragment extends Fragment {
         homeRecyclerAdapter = new HomeRecyclerAdapter(getActivity(),UserNameFromFB, MealNameFromFB, MealImageFromFB,
                 MealPortionFromFB, MealScoreFromFB, MealTimeFromFB,MealIDFromFB);
         recyclerView.setAdapter(homeRecyclerAdapter);
-    }        //verileri homerecyler view de kullanmak için oraya gönderiyoruz
+    }         // we send the data there to use it in homerecyler view
 
-    //tüm veriler burada querysnapshotta veriler güncellendikçe buraya değişikliiikler yansıyor
-    //verileri filtreleme yaparak çekmek istersek addSnapshotListenerdan önce belirteceğiz.
+
+    //all data is here in querysnapshot, changes are reflected here as the data is updated
+    //If we want to pull the data by filtering, we will specify it before addSnapshotListener.
      public void getDataFromFireStore() {
         CollectionReference collectionReference = firebaseFirestore.collection("Recipes");
         collectionReference.orderBy("date", Query.Direction.DESCENDING)
@@ -116,11 +115,11 @@ public class HomeFragment extends Fragment {
                         String mealportion = (String) data.get("mealportion");
                         String downloadUrl = (String) data.get("downloadUrl");
                         System.out.println(cookingtime);
-                        //array atadık gelen verileri
-                        UserNameFromFB.add(userid);
+                        // we assign the incoming data to the array
+                        UserNameFromFB.add(username);
                         MealNameFromFB.add(mealname);
                         CookingStepFromFB.add(cookingstep);
-                       // UserIdFromFB.add(userid);
+                         UserIdFromFB.add(userid);
                        // IngredientsListFromFB =ingredientslist;
                         CategoriesFromFB.add(category);
                         MealPortionFromFB.add(mealportion);

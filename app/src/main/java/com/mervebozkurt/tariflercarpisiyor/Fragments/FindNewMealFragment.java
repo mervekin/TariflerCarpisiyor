@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.FoundRecipeListActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.FoundRecipeListActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+
 
 public class FindNewMealFragment extends Fragment implements View.OnClickListener{
 
@@ -61,7 +62,8 @@ public class FindNewMealFragment extends Fragment implements View.OnClickListene
             List<String> liste= Arrays.asList(ingredient1,ingredient2,ingredient3,ingredient4);
             ArrayList<String> myList = new ArrayList<String>();
             myList.addAll(liste);
-            System.out.println(myList);
+
+            // Ingredients from the user are sent to the FoundRecipeactivity page for the recipe to be found and listed
             Intent recipeintent = new Intent(getContext(), FoundRecipeListActivity.class);
             //recipeintent.putExtra("ingredient", ingredient1);
             recipeintent.putExtra("key1", ingredient1);

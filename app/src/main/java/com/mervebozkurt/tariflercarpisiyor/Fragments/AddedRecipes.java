@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +52,7 @@ public class AddedRecipes extends Fragment {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     ArrayList<String> MealImageFromFB;
-    ArrayList<String> UserNameFromFB;
+    ArrayList<String> UserNameFromFB,UserIdFromFB;
     ArrayList<String> MealNameFromFB;
     ArrayList<String> CookingStepFromFB;
     ArrayList<String> CategoriesFromFB;
@@ -62,20 +63,20 @@ public class AddedRecipes extends Fragment {
     AddedRecipesAdapter addedRecipesAdapter;
     Context context;
 
+    // We list the food recipes added by the user through this fragment.
     public AddedRecipes(){ }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ImageView btndelete=view.findViewById(R.id.btn_delete);
-        ImageView btnupdate=view.findViewById(R.id.btn_update);
+
         context=getActivity();
 
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_for_addedrecipe);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        addedRecipesAdapter = new AddedRecipesAdapter(getActivity(),MealIDFromFB,UserNameFromFB, MealNameFromFB, MealImageFromFB, MealPortionFromFB, MealScoreFromFB, MealTimeFromFB);
+        addedRecipesAdapter = new AddedRecipesAdapter(getActivity(),MealIDFromFB,UserNameFromFB,UserIdFromFB, MealNameFromFB, MealImageFromFB, MealPortionFromFB, MealScoreFromFB, MealTimeFromFB);
         recyclerView.setAdapter(addedRecipesAdapter);
 
 
@@ -84,10 +85,10 @@ public class AddedRecipes extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
+//ArrayLists for added  recipes
         MealImageFromFB = new ArrayList<>();
         UserNameFromFB = new ArrayList<>();
+        UserIdFromFB=new ArrayList<>();
         MealIDFromFB=new ArrayList<>();
         MealNameFromFB = new ArrayList<>();
         CookingStepFromFB = new ArrayList<>();
@@ -114,11 +115,14 @@ public class AddedRecipes extends Fragment {
         FirebaseUser user=firebaseAuth.getCurrentUser();
         final String uid=user.getUid();
         CollectionReference collectionReference = firebaseFirestore.collection("Recipes");
-        collectionReference.whereEqualTo("Userid", uid).orderBy("date", Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collectionReference
+                .whereEqualTo("Userid", uid)
+                .orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error != null) {
-                    //Toast.makeText(getContext(),error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                  // Toast.makeText(getContext(),error.getLocalizedMessage(),Toast.LENGTH_LONG).show();
                 }
                 if (value != null) {
                     for (DocumentSnapshot snapshot : value.getDocuments()) {
@@ -126,7 +130,6 @@ public class AddedRecipes extends Fragment {
                         Map<String, Object> data = snapshot.getData();
 
                         //Casting
-                        String useremail = (String) data.get("useremail");
                         String mealId= (String) data.get("documentId");
                         String username = (String) data.get("fname");
                         String category = (String) data.get("category");
@@ -141,6 +144,7 @@ public class AddedRecipes extends Fragment {
                         System.out.println( mealname);
                         System.out.println(cookingtime);
                         UserNameFromFB.add(username);
+                        UserIdFromFB.add(userId);
                         MealNameFromFB.add(mealname);
                         CookingStepFromFB.add(cookingstep);
                         CategoriesFromFB.add(category);
@@ -148,11 +152,6 @@ public class AddedRecipes extends Fragment {
                         MealTimeFromFB.add(cookingtime);
                         MealImageFromFB.add(downloadUrl);
                         MealIDFromFB.add(mealId);
-                        System.out.println(MealPortionFromFB);
-                        System.out.println(MealImageFromFB.get(0));
-                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                        final StorageReference photoul = firebaseStorage.getReferenceFromUrl(MealImageFromFB.get(0));
-                        System.out.println(photoul);
                         addedRecipesAdapter.notifyDataSetChanged();
 
 
@@ -165,41 +164,6 @@ public class AddedRecipes extends Fragment {
 
     }
 
-    public void deleteRecipe (Integer position) {
-
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        final StorageReference photoul = firebaseStorage.getReferenceFromUrl(MealImageFromFB.get(position));
-
-
-        FirebaseFirestore.getInstance().collection("Recipes")
-                .document(MealIDFromFB.get(position))
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("Good", "tarif Silindi...");
-                        if(photoul!=null)
-                            photoul.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("fd", "onSuccess:silindi");
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("fd", "onFailure: did not delete file");
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Hata", "OnFailure", e);
-            }
-        });
-
-        addedRecipesAdapter.notifyDataSetChanged();
-    }
 
 
 

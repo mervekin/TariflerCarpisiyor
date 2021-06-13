@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +35,7 @@ import com.mervebozkurt.tariflercarpisiyor.Login.SignInActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
+
 
 public class UpdateUserProfile extends AppCompatActivity {
 
@@ -54,8 +53,6 @@ public class UpdateUserProfile extends AppCompatActivity {
 
     Uri imageUri;
     private static final int PICk_IMAGE=1;
-    Bitmap selectedpic;
-
     UploadTask uploadTask;
 
 
@@ -128,7 +125,7 @@ public class UpdateUserProfile extends AppCompatActivity {
 
     }
 
-
+    //The changes made are taken from the user with the Transaction method and changed in the firestore collection.
     private void UpdateUser(){
 
         final String name = etName.getText().toString();
@@ -235,8 +232,7 @@ public class UpdateUserProfile extends AppCompatActivity {
 
         }
     }
-
-
+    // contains information that exists to show the user after the activity has started
     @Override
     protected void onStart() {
         super.onStart();

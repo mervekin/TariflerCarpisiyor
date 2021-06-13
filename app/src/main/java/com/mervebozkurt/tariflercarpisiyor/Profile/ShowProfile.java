@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,13 +32,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mervebozkurt.tariflercarpisiyor.Login.SignInActivity;
-import com.mervebozkurt.tariflercarpisiyor.MainActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.MainActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.UploadRecipeActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.UploadRecipeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ShowProfile extends AppCompatActivity {
     UploadTask uploadTask;
@@ -70,6 +68,7 @@ public class ShowProfile extends AppCompatActivity {
         return true;
     }
 
+//Menu options part
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -104,7 +103,7 @@ public class ShowProfile extends AppCompatActivity {
                         startActivity(new Intent(ShowProfile.this, UpdateUserProfile.class));
                     }
                     else{
-                        startActivity(new Intent(ShowProfile.this, EditProfileActivity.class));
+                        startActivity(new Intent(ShowProfile.this, CreateProfileActivity.class));
                     }
                 }
             });
@@ -142,8 +141,6 @@ public class ShowProfile extends AppCompatActivity {
 
         }
        progressBar.setVisibility(View.INVISIBLE);
-
-
 
         firebaseAuth=FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser()==null){
@@ -235,6 +232,7 @@ public class ShowProfile extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
 
     }
+    // Existing image information is taken from firebase storage and set.
     private void uploadImage(){
 
             final  StorageReference reference=storageReference.child(System.currentTimeMillis()+"."+getFileExt(imageUri));

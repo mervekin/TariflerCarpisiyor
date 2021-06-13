@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowRecipeByCategoryActivity">
+    tools:context=".UI.ShowRecipeByCategoryActivity">
 
 
     <TextView
-        android:visibility="invisible"
         android:id="@+id/recycler_CategoryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,6 +17,7 @@
         android:textColor="@color/Brown4"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/category_recylerview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,4 +33,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_CategoryName" />
+
+    <TextView
+        android:id="@+id/withoutrecipetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="279dp"
+        android:visibility="gone"
+        android:text="Bu kategoriye ait tarif bulunmamaktadır."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

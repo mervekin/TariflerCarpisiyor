@@ -3,21 +3,12 @@ package com.mervebozkurt.tariflercarpisiyor.Profile;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.ImageDecoder;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -41,24 +32,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.Login.SignInActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
-public class EditProfileActivity extends AppCompatActivity  {
+public class CreateProfileActivity extends AppCompatActivity  {
 
     private EditText Name,Surname,Phone,Info;
     private TextView Email;
     ProgressBar progressBar;
     Button btnsave;
     private ImageView profilePicIV;
-
     Uri imageUri;
     private static final int PICk_IMAGE=1;
     Bitmap selectedpic;
@@ -77,7 +63,7 @@ public class EditProfileActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_create_profile);
 
 
         profilePicIV=findViewById(R.id.update_imageView);
@@ -101,7 +87,6 @@ public class EditProfileActivity extends AppCompatActivity  {
         documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
         documentReference2=firebaseFirestore.collection("users").document(firebaseAuth.getUid());
         storageReference=firebaseStorage.getInstance().getReference("profile image");
-
 
 
         btnsave.setOnClickListener(new View.OnClickListener() {
@@ -177,15 +162,14 @@ public class EditProfileActivity extends AppCompatActivity  {
                                 profile.put("email",email);
                                 profile.put("info",info);
                                 profile.put("url",downloadUri.toString());
-
                                 documentReference.set(profile)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
 
                                                 progressBar.setVisibility(View.INVISIBLE);
-                                                Toast.makeText(EditProfileActivity.this,"Profil tamamlandı.",Toast.LENGTH_SHORT).show();
-                                                Intent intent=new Intent(EditProfileActivity.this,ShowProfile.class);
+                                                Toast.makeText(CreateProfileActivity.this,"Profil tamamlandı.",Toast.LENGTH_SHORT).show();
+                                                Intent intent=new Intent(CreateProfileActivity.this,ShowProfile.class);
                                                 startActivity(intent);
                                                 finish();
                                             }
@@ -193,11 +177,10 @@ public class EditProfileActivity extends AppCompatActivity  {
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(EditProfileActivity.this,"hata",Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(CreateProfileActivity.this,"hata",Toast.LENGTH_SHORT).show();
 
                                             }
                                         });
-
                             }
 
                         }
@@ -236,11 +219,9 @@ public class EditProfileActivity extends AppCompatActivity  {
                             Info.setText(info);
                             Email.setText(email);
 
-
-
                         }
                         else{
-                            Toast.makeText(EditProfileActivity.this,"Profil Yok",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CreateProfileActivity.this,"Profil Yok",Toast.LENGTH_SHORT).show();
                         }
 
                     }

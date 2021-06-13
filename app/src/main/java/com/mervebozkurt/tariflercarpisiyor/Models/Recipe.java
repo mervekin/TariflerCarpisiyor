@@ -1,13 +1,10 @@
 package com.mervebozkurt.tariflercarpisiyor.Models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.firebase.firestore.FieldValue;
 
-import java.util.Date;
 import java.util.List;
 
+//The model class that contains the properties of each recipe.
 public class Recipe {
     public String documentId;
     public String useremail;
@@ -49,14 +46,7 @@ public class Recipe {
         this.mealname = mealname;
         this.downloadUrl = downloadUrl;
     }
-    public Recipe(Float mealrating){
-        this.mealrating=mealrating;
 
-    }
-    public Recipe(String username){
-        this.username=username;
-
-    }
 
     public List<String> getSearch() {
         return search;

@@ -1,7 +1,6 @@
 package com.mervebozkurt.tariflercarpisiyor.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.RecipeDetailActivity;
 import com.mervebozkurt.tariflercarpisiyor.Models.RecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
@@ -37,7 +32,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
 
 
     private View.OnClickListener mOnItemClickListener;
-    //burdan bir obje oluşturlması gerekirse bunları vermesi gerekn bir bir constracture oluşturmak gerek
+    ////When an object of this class needs to be created, a constracture is created that should give these values.
 
     public HomeRecyclerAdapter(Activity activity ,ArrayList<String> userNameList, ArrayList<String> mealNameList,
                                ArrayList<String> mealImageList, ArrayList<String> mealPortionList,
@@ -55,7 +50,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
     }
 
     @NonNull
-    @Override //view holder oluşturunca ne yapacagım.bir Post holder göderecek xml ve reccler birbirine bağlayacagız layout inflater ile
+    @Override // What will I do when I create a view holder. Send a Post holder, connect xml and reccs, with layout inflater
     public RecipeViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
 
         View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.home_recycler_row,parent,false);
@@ -65,7 +60,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
         return new RecipeViewHolder(view);
     }
 
-    @Override // view holdera bağlanınca ne yapacagım
+    @Override  // What do I do when the view is connected to the holder
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, final int position) {
         if(mealTimeList!=null) {
             holder.MealName.setText(mealNameList.get(position));
@@ -74,7 +69,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
             holder.MealTime.setText(mealTimeList.get(position));
             Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
 
-            //Tarif detay sayfasına gidiyor.
+            //Going to the recipe detail page.
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -119,7 +115,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
         }
     }
 
-    @Override // bizim recyler viewde kaç tane row olduğunu tutacagız.vereceği
+    @Override // We will keep track of how many rows are in our recycler view and return it
+
     public int getItemCount() {
         return mealNameList.size();
     }

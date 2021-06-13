@@ -1,31 +1,26 @@
 package com.mervebozkurt.tariflercarpisiyor.Adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.ShowRecipeByCategoryActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.ShowRecipeByCategoryActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-
+//Adapter class created for category names and images
 public class CategoryNamesAdapter extends RecyclerView.Adapter<CategoryNamesAdapter.ViewHolder> {
     Context context;
 
-    //String[] CategoryName;
     ArrayList<String> mealImageList;
     ArrayList<String> mealNameList;
     private View.OnClickListener mOnItemClickListener;
@@ -87,29 +82,4 @@ public class CategoryNamesAdapter extends RecyclerView.Adapter<CategoryNamesAdap
         }
     }
 
-    /*@SuppressLint("ViewHolder")
-    @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
-
-        final LayoutInflater inflater=LayoutInflater.from(context);
-        view=inflater.inflate(R.layout.category_listview_row,null);
-
-        ImageView imageCat=view.findViewById(R.id.imageViewCategorylist);
-        TextView textCat=view.findViewById(R.id.textviewCategorylist);
-
-        imageCat.setImageResource(CategoryImages[i]);
-        textCat.setText(CategoryName[i]);
-
-        imageCat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context, ShowRecipeByCategoryActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("category",CategoryName[i]);
-                context.startActivity(intent);
-            }
-        });
-
-        return view;
-    }*/
 }

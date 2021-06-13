@@ -22,9 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.mervebozkurt.tariflercarpisiyor.MainActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.MainActivity;
 import com.mervebozkurt.tariflercarpisiyor.R;
-
+//activity that the user is logged into
 public class SignInActivity extends AppCompatActivity {
     EditText mEmail,mPassword;
     Button mSigninBtn;
@@ -61,7 +61,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email=mEmail.getText().toString().trim();
                 String password=mPassword.getText().toString().trim();
-
+                //user authentication check
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email girilmesi gerekiyor!");
                     return;

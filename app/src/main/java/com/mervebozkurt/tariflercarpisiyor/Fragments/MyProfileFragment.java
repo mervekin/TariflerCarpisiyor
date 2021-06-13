@@ -103,7 +103,8 @@ public class MyProfileFragment extends Fragment {
         System.out.println(CurrentUserıd);
 
         CollectionReference collectionReference=firebaseFirestore.collection("userinfo");
-        collectionReference.whereEqualTo(FieldPath.documentId(),CurrentUserıd).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        collectionReference.whereEqualTo(FieldPath.documentId(),CurrentUserıd)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error!=null){
@@ -120,7 +121,7 @@ public class MyProfileFragment extends Fragment {
                     Picasso.get().load(downloadurl).into(imageProfile);
                     tvName.setText(name +"  "+surname);
                     tvInfo.setText(info);
-                        System.out.println(info);
+
                     }
                 }
             }

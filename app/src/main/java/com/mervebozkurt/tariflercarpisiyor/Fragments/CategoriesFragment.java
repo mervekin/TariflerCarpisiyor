@@ -2,40 +2,31 @@ package com.mervebozkurt.tariflercarpisiyor.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.CategoryNamesAdapter;
-import com.mervebozkurt.tariflercarpisiyor.Adapters.CategoryRecyclerAdapter;
 import com.mervebozkurt.tariflercarpisiyor.R;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
-
+// Fragment created for categories
 public class CategoriesFragment extends Fragment {
 
     Context context;
@@ -70,7 +61,7 @@ public class CategoriesFragment extends Fragment {
         RecyclerView recyclerView=view.findViewById(R.id.categoryRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
+        //Adapter class object
         categoryNamesAdapter=new CategoryNamesAdapter(context,MealImageFromFB,MealNameFromFB);
         recyclerView.setAdapter(categoryNamesAdapter);
 

@@ -3,24 +3,28 @@
     package="com.mervebozkurt.tariflercarpisiyor">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoundRecipeListActivity"></activity>
+
+        <activity android:name=".UI.FoundRecipeListActivity"></activity>
         <activity android:name=".Profile.ShowProfile">
 
         </activity>
         <activity android:name=".Profile.UpdateUserProfile" />
-        <activity android:name=".Profile.EditProfileActivity" />
-        <activity android:name=".ShowRecipeByCategoryActivity" />
-        <activity android:name=".RecipeDetailActivity" />
+        <activity android:name=".Profile.CreateProfileActivity" />
+        <activity android:name=".UI.ShowRecipeByCategoryActivity" />
+        <activity android:name=".UI.RecipeDetailActivity" />
 
-        <activity android:name=".UploadRecipeActivity" />
+        <activity android:name=".UI.UploadRecipeActivity" />
         <activity android:name=".Login.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +34,7 @@
 
         </activity>
         <activity android:name=".Login.SignUpActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".UI.MainActivity" />
     </application>
 
 </manifest>

@@ -1,43 +1,28 @@
-package com.mervebozkurt.tariflercarpisiyor;
+package com.mervebozkurt.tariflercarpisiyor.UI;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.AddedRecipes;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
-import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
+import com.mervebozkurt.tariflercarpisiyor.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,16 +35,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
     FirebaseUser user;
     CollectionReference collectionReference;
     Bundle bundle;
-    String detailID,userID,mealID;
+    String mealname,userID,mealID;
     ImageView imageViewMeal;
     TextView MealName, UserName, CookingStep, Ingredients, MealScore, CookingTime, MealPortion;
 
     RatingBar ratingBar;
-   // List<String> ingredientslist;
     public float RatingNum;
 
-
-    private ArrayAdapter<String> mIngredientsAdapter;
 
 
     @Override
@@ -80,22 +62,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.rating_bar);
 
 
+        //The information of the selected recipe is taken from here
         bundle = getIntent().getExtras();
         if (bundle != null) {
-            detailID = bundle.getString("position");
+            mealname = bundle.getString("position");
             userID = bundle.getString("userID");
             mealID=bundle.getString("documentID");
         }
 
-        System.out.println("detailId"+detailID);
+        System.out.println("1detailId" +mealname);
         System.out.println("mealId"+mealID);
 
 
 
-        //her bir yemek için gerkli bilgileri firestoredan çekeceğiz.
+        // we will pull the necessary information for each dish from the firestore.
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth=FirebaseAuth.getInstance();
         user=firebaseAuth.getCurrentUser();
+        //get Recipe Function
         getMealDetailFromFireStore();
 
         getRating();
@@ -103,7 +87,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
     }
-
+    //there are some deficiency in this function
     public void getRating() {
         ratingBar.setVisibility(View.VISIBLE);
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -143,22 +127,22 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
     public void getMealDetailFromFireStore() {
-
          collectionReference = firebaseFirestore.collection("Recipes");
-         collectionReference.whereEqualTo("mealname",detailID).get()
+
+         collectionReference
+                 .whereEqualTo("mealname",mealname).get()
                  .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                      @Override
                      public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                          for(QueryDocumentSnapshot doc :queryDocumentSnapshots){
-
-
+                             //ingredients are assigned to the List.
                                 List<String> ingred = (List<String>) doc.get("ingredientlist");
                                 System.out.println(ingred);
                                 Ingredients.setText("");
                                 for (int j = 0; j < ingred.size(); j++) {
                                     Ingredients.append("    +  " + ingred.get(j) + "\n");
                                 }
-
+                                //other data is assigned to string values.
                                 String downloadUrl = doc.getString("downloadUrl");
                                 String useremail = doc.getString("useremail");
                                 String username = doc.getString("username");
@@ -169,6 +153,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                                 String cookingtime = doc.getString("cookingtime");
                                 String mealportion = doc.getString("mealportion");
 
+                                //The data is set to the android components used.
                                 MealName.setText(mealname);
                                 Picasso.get().load(downloadUrl).into(imageViewMeal);
                                 UserName.setText(username);
@@ -180,53 +165,26 @@ public class RecipeDetailActivity extends AppCompatActivity {
                      }
                  });
 
-             if(!mealID.isEmpty()){
-                 System.out.println(" receipedetail MealId "+mealID);
-                 //MealScore.setText("5");
+        if(!mealID.isEmpty()) {
+            System.out.println(" receipedetail MealId " + mealID);
+            firebaseFirestore.collection("Rating").document(mealID)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Number mealrating = (Number) documentSnapshot.get("mealrating");
+                            System.out.println(mealrating + " yeni veri ");
+                            MealScore.setText(mealrating + "");
+                        }
 
-             firebaseFirestore.collection("Rating").document(mealID)
-                 .get()
-                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                     @Override
-                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                         Number mealrating= (Number) documentSnapshot.get("mealrating");
-                         System.out.println(mealrating+ " yeni veri ");
-                         MealScore.setText(mealrating+"");
-                     }
+                    });
 
-                 });
-
-
+        }
 
 
     }
-
-
-
-
-             //bu kısım şüpheli tekrar bak
-       /* firebaseFirestore.collection("users").document(userID)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        String usernames= (String) documentSnapshot.get("username");
-                        System.out.println(usernames+ "denemrfgrfg");
-                        UserName.setText(usernames);
-                        UserName.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Fragment fragment=new MyProfileFragment();
-                               /* Intent intent= new Intent(getApplicationContext(), MyProfileFragment.class);
-                                startActivity(intent);/
-
-                            }
-                        });
-
-                    }
-                });*/
     }
-   }
+
 
 
 

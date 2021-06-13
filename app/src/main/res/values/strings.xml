@@ -43,5 +43,6 @@
     <string name="saved_button">Tarifi Favorilere ekle</string>
     <string name="ingredient_instruction">Buzdolabınızda bulunan 4  ana malzemeyi  girerek tarifleri bulun</string>
     <string name="info">Hakkınızda kısmı</string>
+    <string name="update_profile">Profilinizi düzenleyebilirsiniz</string>
 
 </resources>

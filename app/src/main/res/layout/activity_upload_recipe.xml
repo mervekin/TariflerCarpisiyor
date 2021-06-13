@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".UploadRecipeActivity">
+    tools:context=".UI.UploadRecipeActivity">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

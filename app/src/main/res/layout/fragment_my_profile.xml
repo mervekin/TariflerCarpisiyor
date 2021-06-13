@@ -65,8 +65,7 @@
                 android:layout_below="@+id/tv_name"
                 android:layout_centerHorizontal="true"
                 android:fontFamily="sans-serif"
-                android:text="new york, usa"
-                android:textAllCaps="true"
+                android:text="yeni aşçı"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp" />
 

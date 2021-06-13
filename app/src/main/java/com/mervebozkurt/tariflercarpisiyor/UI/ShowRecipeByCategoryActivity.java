@@ -1,4 +1,4 @@
-package com.mervebozkurt.tariflercarpisiyor;
+package com.mervebozkurt.tariflercarpisiyor.UI;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,22 +18,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mervebozkurt.tariflercarpisiyor.Adapters.CategoryRecyclerAdapter;
+import com.mervebozkurt.tariflercarpisiyor.R;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+//Activity created for recipes listed according to the selected category
 
 public class ShowRecipeByCategoryActivity extends AppCompatActivity {
-    private static final String TAG = "BYCATEGORY";
-    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
-    TextView categoryName;
+    TextView categoryName,NoRecipeText;
 
     ArrayList<String> cMealImageFromFB;
-    ArrayList<String> cUserNameFromFB;
-    ArrayList<String> cMealNameFromFB;
+    ArrayList<String> cUserNameFromFB ,cUserIdFromFB;
+    ArrayList<String> cMealNameFromFB,cMealIdFromFB;
     ArrayList<String> cCookingStepFromFB;
-    ArrayList<String> cIngredientsListFromFB;
     ArrayList<String> cCategoriesFromFB;
     ArrayList<String> cMealPortionFromFB;
     ArrayList<String> cMealScoreFromFB;
@@ -49,15 +48,16 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
 
         cMealImageFromFB=new ArrayList<>();
         cUserNameFromFB=new ArrayList<>();
+        cUserIdFromFB=new ArrayList<>();
         cMealNameFromFB=new ArrayList<>();
+        cMealIdFromFB=new ArrayList<>();
         cCookingStepFromFB=new ArrayList<>();
-        //cIngredientsListFromFB=new ArrayList<>();
         cCategoriesFromFB=new ArrayList<>();
         cMealPortionFromFB=new ArrayList<>();
         cMealScoreFromFB=new ArrayList<>();
         cMealTimeFromFB=new ArrayList<>();
 
-        firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
 
         bundle=getIntent().getExtras();
@@ -68,18 +68,20 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
         getRecipeByCategory();
 
         categoryName=findViewById(R.id.recycler_CategoryName);
+        NoRecipeText=findViewById(R.id.withoutrecipetext);
 
-        //REcyclerView
+        //RecyclerView operation
 
         RecyclerView recyclerView=findViewById(R.id.category_recylerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //verileri homerecyler view de kullanmak için oraya gönderiyoruz
-        categoryRecyclerAdapter=new CategoryRecyclerAdapter(cUserNameFromFB,cMealNameFromFB,cMealImageFromFB,cMealPortionFromFB,cMealScoreFromFB,cMealTimeFromFB);
+        //Constructer object is created to use the data in the categoryrecyler adapter class.
+        categoryRecyclerAdapter=new CategoryRecyclerAdapter(cUserNameFromFB,cUserIdFromFB,cMealNameFromFB,cMealIdFromFB,cMealImageFromFB,cMealPortionFromFB,cMealScoreFromFB,cMealTimeFromFB);
         recyclerView.setAdapter(categoryRecyclerAdapter);
 
 
 
     }
+
 
     public void getRecipeByCategory(){
 
@@ -99,11 +101,12 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
                         Map<String,Object> data=snapshot.getData();
 
                         //Casting
-                        String useremail =(String)data.get("useremail");
+                        //
                         String username=(String)data.get("fname");
+                        String userId= (String) data.get("Userid");
                         String category=(String)data.get("category");
                         String mealname=(String)data.get("mealname");
-                        //String ingredientslist=(String)data.get("ingredientslist");
+                        String mealId= (String) data.get("documentId");
                         String cookingstep=(String)data.get("cookingstep");
                         String cookingtime= (String)data.get("cookingtime");
                         String mealportion=(String)data.get("mealportion");
@@ -114,20 +117,25 @@ public class ShowRecipeByCategoryActivity extends AppCompatActivity {
                             categoryName.setVisibility(View.VISIBLE);
 
 
-                        //array atadık gelen verileri
+                        //We assigned the data from the firestore to the array
                         cUserNameFromFB.add(username);
+                        cUserIdFromFB.add(userId);
                         cMealNameFromFB.add(mealname);
+                        cMealIdFromFB.add(mealId);
                         cCookingStepFromFB.add(cookingstep);
-                       // cIngredientsListFromFB.add(ingredientslist);
                         cCategoriesFromFB.add(category);
                         cMealPortionFromFB.add(mealportion);
                         cMealTimeFromFB.add(cookingtime);
                         cMealImageFromFB.add(downloadUrl);
-                        System.out.println(cMealPortionFromFB);
+
                         categoryRecyclerAdapter.notifyDataSetChanged();
 
 
                     }
+                }
+                if(value==null) {
+                        NoRecipeText.setVisibility(View.VISIBLE);
+
                 }
             }
         });

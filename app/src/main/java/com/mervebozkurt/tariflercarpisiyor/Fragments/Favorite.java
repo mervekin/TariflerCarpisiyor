@@ -10,11 +10,7 @@ import android.view.ViewGroup;
 
 import com.mervebozkurt.tariflercarpisiyor.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Favorite#newInstance} factory method to
- * create an instance of this fragment.
- */
+//Dahil olmaya bir kısım ileride geliştirilecek
 public class Favorite extends Fragment {
 
     public Favorite() {

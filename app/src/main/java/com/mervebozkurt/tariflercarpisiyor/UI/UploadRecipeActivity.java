@@ -1,4 +1,4 @@
-package com.mervebozkurt.tariflercarpisiyor;
+package com.mervebozkurt.tariflercarpisiyor.UI;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,8 +15,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,17 +22,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,12 +36,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
 import com.mervebozkurt.tariflercarpisiyor.Profile.ShowProfile;
+import com.mervebozkurt.tariflercarpisiyor.R;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+  //Adding New Recipe Page
 public class UploadRecipeActivity extends AppCompatActivity {
 
 
@@ -94,6 +90,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
        collectionReference=firebaseFirestore.collection("Recipes");
        firebaseUser=firebaseAuth.getCurrentUser();
 
+       //Spinner transactions created to select a category
         ArrayAdapter adapter=ArrayAdapter.createFromResource(this,R.array.RecipesCategories,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
@@ -118,7 +115,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
      if(imageData!=null && ChoisenCate!=null){
-            //univarsal uniqui id
+            // UUID = universal unique id
             UUID uuid=UUID.randomUUID();
             final String imageName="images/" + uuid + ".jpg";
             storageReference.child(imageName).putFile(imageData)
@@ -137,18 +134,6 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             String userEmail=firebaseUser.getEmail();
                             String username=firebaseUser.getDisplayName();
 
-                           /* DocumentReference docref=firebaseFirestore.collection("users").document(userID);
-                            docref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    String usernames =(String) documentSnapshot.get("username");
-                                    deneme=new String(usernames);
-                                    recipe1=new Recipe(deneme);
-
-
-                                }
-                            });*/
-
                             mealName = MealName.getText().toString();
                             cookingStep = CookingStep.getText().toString();
                             cookingTime = CookingTime.getText().toString();
@@ -162,18 +147,19 @@ public class UploadRecipeActivity extends AppCompatActivity {
                             search = Arrays.asList(searchitem);
                             mealID=collectionReference.document().getId();
 
+                            //Object created from Recipe model class
                            final Recipe recipe=new Recipe(mealID,userID,userEmail,username,ChoisenCate,mealName,cookingStep,cookingTime,mealPortion,downloadUrl,mylist,date,search);
 
                             Toast.makeText(UploadRecipeActivity.this,"Başarılı",Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.INVISIBLE);
 
-                            //Firestore verileri kayıt etme adımı
+                            //Firestore data saving step
                             firebaseFirestore.collection("Recipes").document(mealID).set(recipe)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Intent intent=new Intent(UploadRecipeActivity.this,MainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
+                                            Intent intent=new Intent(UploadRecipeActivity.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// means turn off all previous activities
                                             startActivity(intent);
 
                                         }
@@ -182,33 +168,10 @@ public class UploadRecipeActivity extends AppCompatActivity {
                                 public void onFailure(@NonNull Exception e) {
                                     Toast.makeText(UploadRecipeActivity.this,"hata",Toast.LENGTH_LONG).show();
                                     Intent intent=new Intent(UploadRecipeActivity.this, ShowProfile.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// means turn off all previous activities
                                     startActivity(intent);
                                 }
                             });
-                                   /* .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    //kullanıcıyı main activitiye geri götürecegiz yani receipe yüklenmiş olacak bu ksımı sonra profil sayfasına götürebilirsin
-
-
-                                    Intent intent=new Intent(UploadRecipeActivity.this,MainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
-                                    startActivity(intent);
-
-
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(UploadRecipeActivity.this,"hata",Toast.LENGTH_LONG).show();
-                                    Intent intent=new Intent(UploadRecipeActivity.this, ShowProfile.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//ddaha önceki tüm activitiyleri kapat anlamına geliyor
-                                    startActivity(intent);
-                                }
-                            });*/
-
 
 
                         }
@@ -240,7 +203,7 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
     //
 
-//izin istedik ve ne yapcağız
+      // we asked for permission to access the gallery and what will we do
  @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==1){
@@ -256,11 +219,11 @@ public class UploadRecipeActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //galeriye gitti resmi seçti ne yapacagız request kod ile kontrol ediyoruz
-        //data resim varsa,equestVode galeriye gittiyse result ok gereçekten resmi okayladıyse
-        //datayı Url çevirmemiz gerekiyor.
+        // went to the gallery, chose the picture, what to do, we check with the request code
+        //data if the image exists, if the requestcode went to the gallery, if the result ok really approved the image
+        // we need to convert the data to Url.
         if(requestCode==2 && resultCode==RESULT_OK && data!=null){
-            imageData=data.getData();   //bunu alıp bitmap olarak çevirmemiz gerekiyor.
+            imageData=data.getData(); // we need to take this and convert it as a bitmap.
             try {
 
                 if(Build.VERSION.SDK_INT>=28){

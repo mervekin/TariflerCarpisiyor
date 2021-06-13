@@ -1,4 +1,4 @@
-package com.mervebozkurt.tariflercarpisiyor;
+package com.mervebozkurt.tariflercarpisiyor.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +17,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mervebozkurt.tariflercarpisiyor.Fragments.AddedRecipes;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.CategoriesFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.FindNewMealFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.HomeFragment;
 import com.mervebozkurt.tariflercarpisiyor.Fragments.MyProfileFragment;
 import com.mervebozkurt.tariflercarpisiyor.Login.SignInActivity;
-import com.mervebozkurt.tariflercarpisiyor.Profile.EditProfileActivity;
+import com.mervebozkurt.tariflercarpisiyor.Profile.CreateProfileActivity;
 import com.mervebozkurt.tariflercarpisiyor.Profile.ShowProfile;
+import com.mervebozkurt.tariflercarpisiyor.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private DocumentReference documentReference;
 
 
-    //navbar kısmı
+    //bottom Navigation  options
     private BottomNavigationView NavbarView;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment=new MyProfileFragment();
                     break;
                 case R.id.navigation_AddRecipe:
-                   startActivity(new Intent(getApplicationContext(),UploadRecipeActivity.class));
+                   startActivity(new Intent(getApplicationContext(), UploadRecipeActivity.class));
                     break;
                 default:
                     throw new IllegalStateException("Unexpected value: " + item.getItemId());
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//Menu kısmı
+//Menu Part
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        //menu seçeneklerine tıklayınca ne yapması gerektiğini göstereceğiz.
-        if(item.getItemId()==R.id.UploadNewRecipe){
+// we will show you what to do when you click on the menu options.
+        if(item.getItemId()==R.id.UploadNewRecipe){//Redirects to add new recipe
             startActivity(new Intent(MainActivity.this,UploadRecipeActivity.class));
 
-        }else if(item.getItemId()==R.id.home){
+        }else if(item.getItemId()==R.id.home){//Redirects to home page
             startActivity(new Intent(MainActivity.this,MainActivity.class));
         }
         else if(item.getItemId()==R.id.signout){
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, SignInActivity.class));
             finish();
 
-        }else if(item.getItemId()==R.id.editProfile){
+        }else if(item.getItemId()==R.id.editProfile){ //Redirects to the show page.
             documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, ShowProfile.class));
                     }
                     else{
-                        startActivity(new Intent(MainActivity.this, EditProfileActivity.class));
+                        startActivity(new Intent(MainActivity.this, CreateProfileActivity.class));
                     }
                 }
             });
@@ -127,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseFirestore=FirebaseFirestore.getInstance();
-
-      // documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
+       documentReference=firebaseFirestore.collection("userinfo").document(firebaseAuth.getUid());
 
         if(firebaseAuth.getCurrentUser()==null){
             finish();
@@ -139,8 +138,7 @@ public class MainActivity extends AppCompatActivity {
         //navbar
         NavbarView =findViewById(R.id.navbar_view);
         NavbarView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        NavbarView.setItemIconTintList(null);//bu ne imiş araştır
-
+        NavbarView.setItemIconTintList(null);
     }
 
 

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.RecipeDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,7 +22,9 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private static final String TAG = "HomeRecyclerAdapter";
     private LayoutInflater layoutInflater;
     private ArrayList<String> userNameList;
+    private ArrayList<String> userIdList;
     private ArrayList<String>  mealNameList;
+    ArrayList<String> mealIdList;
     private ArrayList<String>  mealImageList;
     private ArrayList<String>  mealScoreList;
     private ArrayList<String> mealTimeList;
@@ -32,9 +34,11 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     private View.OnClickListener mOnItemClickListener;
     //burdan bir obje oluşturlması gerekirse bunları vermesi gerekn bir bir constracture oluşturmak gerek
 
-    public CategoryRecyclerAdapter(ArrayList<String> userNameList, ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealPortionList,ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
+    public CategoryRecyclerAdapter(ArrayList<String> userNameList,ArrayList<String> userIdList, ArrayList<String> mealNameList,    ArrayList<String> mealIdList ,ArrayList<String> mealImageList, ArrayList<String> mealPortionList,ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
         this.userNameList = userNameList;
+        this.userIdList=userIdList;
         this.mealNameList = mealNameList;
+        this.mealIdList=mealIdList;
         this.mealImageList = mealImageList;
         this.mealScoreList = mealScoreList;
         this.mealTimeList = mealTimeList;
@@ -44,8 +48,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     @Override
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater=LayoutInflater.from(parent.getContext());
-        View view=layoutInflater.inflate(R.layout.category_recycler_row,parent,false);
-        //View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recycler_row,parent,false);
+        View view=layoutInflater.inflate(R.layout.category_recycler_row,parent,false);;
 
         return new PostHolder(view);
     }
@@ -59,12 +62,15 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
             holder.MealTime.setText(mealTimeList.get(position));
             Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
 
+            //According to the clicked recycler view element, it is directed to the Recipe Detail page.
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     Intent intent=new Intent(view.getContext(), RecipeDetailActivity.class);
                     intent.putExtra("position",mealNameList.get(position));
+                    intent.putExtra("userID",userIdList.get(position));
+                    intent.putExtra("documentID",mealIdList.get(position));
                     view.getContext().startActivity(intent);
                 }
             });

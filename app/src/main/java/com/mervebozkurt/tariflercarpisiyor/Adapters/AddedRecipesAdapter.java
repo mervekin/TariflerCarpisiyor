@@ -20,32 +20,33 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mervebozkurt.tariflercarpisiyor.R;
-import com.mervebozkurt.tariflercarpisiyor.Models.Recipe;
-import com.mervebozkurt.tariflercarpisiyor.RecipeDetailActivity;
+import com.mervebozkurt.tariflercarpisiyor.UI.RecipeDetailActivity;
 import com.mervebozkurt.tariflercarpisiyor.Models.RecipeViewHolder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+//It is the adapter class created for the recycler view created to list the recipes added by the user.
+//Here, the data in the Arraylists are listed in the recycler view.
 public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
-    private final ArrayList<String> mealIDlist;
-    private ArrayList<String> userNameList;
-    private ArrayList<String> mealNameList;
-    private ArrayList<String> mealImageList;
-    private ArrayList<String> mealScoreList;
-    private ArrayList<String> mealTimeList;
-    private ArrayList<String> mealPortionList;
+
+     ArrayList<String> mealIDlist;
+     ArrayList<String> userNameList,userIdList;
+     ArrayList<String> mealNameList;
+     ArrayList<String> mealImageList;
+     ArrayList<String> mealScoreList;
+     ArrayList<String> mealTimeList;
+     ArrayList<String> mealPortionList;
 
     Context context ;
-    private View mParentLayout;
-    private Recipe currentRecipe;
     FirebaseStorage firebaseStorage;
     Activity activity;
 
-    public AddedRecipesAdapter(Activity activity, ArrayList<String> mealIDList, ArrayList<String> userNameList, ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealPortionList, ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
+    public AddedRecipesAdapter(Activity activity, ArrayList<String> mealIDList, ArrayList<String> userNameList, ArrayList<String> userIdList ,ArrayList<String> mealNameList, ArrayList<String> mealImageList, ArrayList<String> mealPortionList, ArrayList<String> mealScoreList, ArrayList<String> mealTimeList) {
       this.activity=activity;
         this.mealIDlist = mealIDList;
         this.userNameList = userNameList;
+        this.userIdList=userIdList;
         this.mealNameList = mealNameList;
         this.mealImageList = mealImageList;
         this.mealScoreList = mealScoreList;
@@ -76,7 +77,7 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
             holder.MealPortion.setText(mealPortionList.get(position));
             holder.MealTime.setText(mealTimeList.get(position));
             holder.DeleteRecipe.setVisibility(View.VISIBLE);
-            holder.UpdateRecipe.setVisibility(View.VISIBLE);
+            //holder.UpdateRecipe.setVisibility(View.VISIBLE);
 
 
             Picasso.get().load(mealImageList.get(position)).into(holder.MealImage);
@@ -88,9 +89,9 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
 
                     Intent intent = new Intent(view.getContext(), RecipeDetailActivity.class);
                     intent.putExtra("position", mealNameList.get(position));
-
-                    System.out.println(mealNameList.get(position));
-                    view.getContext().startActivity(intent);
+                     intent.putExtra("userID",userIdList.get(position));
+                    intent.putExtra("documentID", mealIDlist.get(position));
+                   view.getContext().startActivity(intent);
 
                 }
             });
@@ -105,9 +106,6 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
             holder.DeleteRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*Recipe recipe = new Recipe(userNameList.get(position), mealIDlist.get(position), mealNameList.get(position), mealImageList.get(position));
-                    System.out.println("mealID " + mealIDlist.get(position));
-                    deleteRecipe(recipe,position);*/
                  AlertDialog.Builder alertDialogBuilderLabelDelete = new AlertDialog.Builder(v.getRootView().getContext());
                     alertDialogBuilderLabelDelete.setCancelable(false);
                     alertDialogBuilderLabelDelete.setTitle("Tarifi Sil");
@@ -115,16 +113,9 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
                     alertDialogBuilderLabelDelete.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                           // Recipe recipe = new Recipe(userNameList.get(position), mealIDlist.get(position), mealNameList.get(position), mealImageList.get(position));
-                            System.out.println("mealID " +position);
 
-                            System.out.println("imagw"+mealImageList.get(position));
-
-                            /*AddedRecipes addedRecipes= new AddedRecipes();
-                            addedRecipes.*/
                             deleteRecipe(position);
                             context.startActivity(new Intent(activity,activity.getClass()));
-
 
                         }
                     });
@@ -136,7 +127,6 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
                     });
                     AlertDialog alertDialog = alertDialogBuilderLabelDelete.create();
                     alertDialog.show();
-
 
 
 
@@ -152,8 +142,7 @@ public class AddedRecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> 
     public int getItemCount() {
         return mealNameList.size();
     }
-
-
+    // The user can delete the added recipes in this section.
      public void deleteRecipe( int position) {
         firebaseStorage = FirebaseStorage.getInstance();
         final StorageReference photoul = firebaseStorage.getReferenceFromUrl(mealImageList.get(position));
